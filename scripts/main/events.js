@@ -8,6 +8,8 @@ $(function(){
     $('#dgiCmbDel').on("change",dgicmbdel_change);
 
     $('#dgiFilterSearch').on("click",getSearch);
+    
+    $('#tramite').on("click",tipo_formato);
 
     $('#lst_indice').on("click","a",ids_change);
 

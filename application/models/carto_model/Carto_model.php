@@ -10,12 +10,13 @@
 class Carto_model extends CI_Model
 {
     private $httpClient;
+    protected $proxy;
 
     public function __construct()
     {
         $this->load->library('guzzle');
         $this->httpClient =  new GuzzleHttp\Client();
-
+        $this->proxy = ['url' => 'axtel.finanzas.cdmx.gob.mx', 'port' => 3128];
     }
 
     private function prepareResponse($body)
@@ -31,13 +32,19 @@ class Carto_model extends CI_Model
     public function toSql($sql){
         $url = 'http://'.CARTODB_USER.'.carto.com/api/v2/sql';
         try {
+            $base = ['form_params' => ['q' => $sql,'api_key'=> CARTODB_APIKEY]];
+
+            if (isset($this->proxy)) {
+                $proxy = [
+                    'http' => "{$this->proxy['url']}:{$this->proxy['port']}",
+                    'https' => "{$this->proxy['url']}:{$this->proxy['port']}",
+                ];
+                $base = array_merge($base, ['proxy' => $proxy]);
+            }
+
             # guzzle post request example with form parameter
             $request = $this->httpClient->request( 'POST',
-                $url,
-                [ 'form_params'
-                => [ 'q' => $sql,'api_key' => CARTODB_APIKEY]
-                ]
-            );
+                $url,$base);
             #guzzle repose for future use
             //echo $response->getStatusCode(); // 200
             //echo $response->getReasonPhrase(); // OK

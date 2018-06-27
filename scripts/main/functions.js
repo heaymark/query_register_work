@@ -49,6 +49,15 @@ var callbackMap = function(layer){
 
     $.get($("#baseUrl").val()+"carto/getDelegaciones",getDelegacion,"json");
 
+    // var url = $("#baseUrl").val()+"carto/getDelegaciones";
+    // $.ajax({
+    //     url: url,
+    //     type: 'POST',
+    //     dataType: 'html',
+    //     async:false,
+    //     success: getDelegacion
+    // });
+
     // objMap.tosql(users,"select * from basedel order by nombre asc",getDelegacion,[]);
     // objMap.tosql(users,"select * from limites_delegaciones_seduvi_cdmx order by delegacia_ asc",getDelegacion,[]);
     
@@ -227,4 +236,17 @@ ids_change = function(evt){
             $("#lgd_estracto").show();
             break;
         }
+}
+
+tipo_formato = function(){
+    var url = $('#baseUrl').val()+'welcome/catalogo_procesos/';
+    $.ajax({
+        url:url,
+        type: 'post',
+        dataType: 'html',
+        async: false,
+        success: function(res){
+            $('#tipo_formato').html(res);
+        }
+    });
 }

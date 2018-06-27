@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => '',
-	'password' => '',
-	'database' => '',
-	'dbdriver' => 'mysqli',
+	'hostname' => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.14.124)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
+	'username' => 'OWDRO',
+	'password' => 'OWDRO',
+	'database' => 'OWDRO',
+	'dbdriver' => 'oci8',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

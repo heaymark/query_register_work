@@ -38,8 +38,18 @@
                 <div class="panel-body">
                   <span class="col-xs-12">
                     <div class="form-group">
-                      <label>Tipo Formaro:</label>
-                      <select id="tformato" name="tformato" class="form-control"></select>
+                      <label>Tipo Formato:</label>
+                      <!-- <select id="tformato" name="tformato" class="form-control"></select> -->
+                      <select id="tipo_formato" name="tipo_formato" class="form-control" style="width:100%;" required >
+                        <option value="">Seleccionar</option>
+                          <?php
+                          foreach($idtipoprocesos_array as $idtipoprocesos_a){
+                          ?>
+                            <option value="<?php echo $idtipoprocesos_a['IDTIPOPROCESO']?>" <?php if($idtipoprocesos_a['IDTIPOPROCESO'] == $idtipopproceso){echo "selected";}?> ><?php echo $idtipoprocesos_a['DESCRIPCION']?></option>
+                          <?php
+                          }
+                          ?>
+                      </select>
                     </div>
                     <div class="form-group">
                         <label>Subtipo Formato</label>
