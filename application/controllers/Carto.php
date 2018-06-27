@@ -34,4 +34,11 @@ class Carto extends CI_Controller {
      $response = $this->objCarto->toSql("select * from basedel order by nombre asc");
      echo $response;
   }
+
+  public function getColonias(){
+     $this->load->model('Carto_model/Carto_model','objCarto');
+     $response = $this->objCarto->toSql("select * from basecol order by delegacion asc,nombre asc");
+     echo $response;
+  }
+
 }

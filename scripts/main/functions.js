@@ -52,7 +52,7 @@ var callbackMap = function(layer){
     // objMap.tosql(users,"select * from basedel order by nombre asc",getDelegacion,[]);
     // objMap.tosql(users,"select * from limites_delegaciones_seduvi_cdmx order by delegacia_ asc",getDelegacion,[]);
     
-    $.get($("#baseUrl").val()+"carto/getDelegaciones",getColonia,"json");
+    $.get($("#baseUrl").val()+"carto/getColonias",getColonia,"json");
 
     // objMap.tosql(users,"select * from basecol order by delegacion asc,nombre asc",getColonia,[]);
     // objMap.tosql(users,"select * from colonias_seduvi order by id_mun asc,nombre asc",getColonia,[]);
