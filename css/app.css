@@ -1,0 +1,156 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    background-color: #9eaaa6;
+
+}
+#divMapMain{
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+#divOptions{
+    width: 100%;
+}
+
+#dvdetalles div{
+    padding: 0px 8px 0px 8px;
+}
+
+#infodetalle{
+	height: 100%;
+    width: 100%;
+    min-height: 60%;
+    overflow-x: auto;
+}
+
+#infofiltro{
+    height: 40%;
+    min-height: 40%;
+
+}
+
+#charts{
+    height: 38%;
+    min-height: 38%;
+
+}
+
+#divMapSec{
+    height: 38%;
+    min-height: 38%;
+    overflow-x: auto;
+}
+
+#deleg{
+    height: 250px;
+    min-height: 250px;
+    overflow-x: auto;
+}
+
+#txtFilter{
+    color: #76B270;
+}
+
+
+.list-group-item {
+    padding: 3px 3px;
+
+}
+
+.pnlgrafica{
+    overflow-x: auto;
+}
+
+.tabmenu{
+    background-color: rgb(158,158,158);
+    color: #FFFFFF;
+    margin-top:3px;
+    border-bottom: 2px solid #000000;
+    border-top: 2px solid #000000;
+    font-weight: bold;
+    z-index: 100;
+}
+
+.lbltext{
+    color: rgb(182,120,1) !important;
+    border-bottom: 1.5px solid #000000;
+}
+
+input{
+    border: 1px solid #e90eb0  !important;
+}
+
+#dgiFilter{
+    position: absolute;
+
+    padding: 0;
+    top: 10px;
+	left: 55px;
+    width: 200px;
+    height: auto;
+
+    background: #fff  !important;
+
+    border-radius: 4px  !important;
+    border: 1px solid #999999  !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px 2px  !important;
+
+    z-index:7;
+}
+
+#filter{
+    position: absolute;
+
+    padding: 0;
+    top: 10px;
+	   left: 55px;
+    width: 200px;
+    height: auto;
+
+    background: #fff  !important;
+
+    border-radius: 4px  !important;
+    border: 1px solid #999999  !important;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px 2px  !important;
+
+    z-index:7;
+}
+
+#dgiFilter div input,select,p{
+    margin:0px 5px 0px 5px;
+    width: 190px !important;
+    min-width: 190px !important;
+    max-width: 190px !important;
+
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 8pt;
+    font-style: normal;
+
+    z-index:7;
+}
+
+#dgiFilter button{
+    float: right;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 5px;
+    background: #fff;
+    border-radius: 4px;
+    border: 1px solid #999999;
+}
+
+.navbar a{
+  color:#FFFFFF;
+}
+
+#dv_options{
+  position: absolute;
+  top: 12px;
+  left:12px;
+  z-index: 2;
+}
