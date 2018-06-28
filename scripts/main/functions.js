@@ -60,7 +60,7 @@ var callbackMap = function(layer){
 
     // objMap.tosql(users,"select * from basedel order by nombre asc",getDelegacion,[]);
     // objMap.tosql(users,"select * from limites_delegaciones_seduvi_cdmx order by delegacia_ asc",getDelegacion,[]);
-    
+
     $.get($("#baseUrl").val()+"carto/getColonias",getColonia,"json");
 
     // objMap.tosql(users,"select * from basecol order by delegacion asc,nombre asc",getColonia,[]);
@@ -249,4 +249,106 @@ tipo_formato = function(){
             $('#tipo_formato').html(res);
         }
     });
+}
+
+tipo_subformato = function() {
+    switch ($("#tipo_formato").val()) {
+        case "1":
+            var url = $('#baseUrl').val()+'welcome/manifestacion_tipob/';
+            $.ajax({
+                url:url,
+                type: 'post',
+                dataType: 'html',
+                async: false,
+                success: function(res){
+                    $('#subtipo_formato_select').html(res);
+                    getSearchTramite();
+                }
+            });
+            break;
+        case "2":
+            var url = $('#baseUrl').val()+'welcome/manifestacion_tipoc/';
+            $.ajax({
+                url:url,
+                type: 'post',
+                dataType: 'html',
+                async: false,
+                success: function(res){
+                    $('#subtipo_formato_select').html(res);
+                    getSearchTramite();
+
+                }
+            });
+            break;
+        case "3":
+            var url = $('#baseUrl').val()+'welcome/licencia_construccion/';
+            $.ajax({
+                url:url,
+                type: 'post',
+                dataType: 'html',
+                async: false,
+                success: function(res){
+                    $('#subtipo_formato_select').html(res);
+                    getSearchTramite();
+
+                }
+            });
+            break;
+        case "4":
+            var url = $('#baseUrl').val()+'welcome/otras_responsivas/';
+            $.ajax({
+                url:url,
+                type: 'post',
+                dataType: 'html',
+                async: false,
+                success: function(res){
+                    $('#subtipo_formato_select').html(res);
+                    getSearchTramite();
+
+                }
+            });
+            break;
+        case "5":
+            var url = $('#baseUrl').val()+'welcome/reconstruccion_multifamiliar/';
+            $.ajax({
+                url:url,
+                type: 'post',
+                dataType: 'html',
+                async: false,
+                success: function(res){
+                    $('#subtipo_formato_select').html(res);
+                    getSearchTramite();
+
+                }
+            });
+            break;
+        case "":
+            $('#subtipo_formato_select').empty();
+            objMap.toLyrSQL(6,"SELECT * FROM dro_tramites");
+            //$('#tipo_formato').empty();
+            // $('[data-modal=accion]').attr('id','btn_accion');
+            //$("#btn_accion").css("display", "none");
+            break;
+    }
+    
+}
+
+
+getSearchTramite = function (){
+  var tipo_formato = $("#tipo_formato").val();
+  var tipo_subformato = $("#subtipo_formato_select").val();
+  var data = {tformato:tipo_formato, tsubformato:tipo_subformato}
+  var url = $('#baseUrl').val()+'welcome/gettramites/';
+
+  $.ajax({
+      url:url,
+      data:data,
+      type: 'post',
+      dataType: 'text',
+      async: false,
+      success: function(res){
+        objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
+          //$('#subtipo_formato_select').html(res);
+      }
+  });
 }

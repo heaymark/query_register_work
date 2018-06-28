@@ -8,8 +8,14 @@ $(function(){
     $('#dgiCmbDel').on("change",dgicmbdel_change);
 
     $('#dgiFilterSearch').on("click",getSearch);
-    
-    $('#tramite').on("click",tipo_formato);
+
+    $('#btramite').on("click",getSearchTramite);
+
+    $('[data-tab=tramite]').on("click",tipo_formato);
+
+    $("#tipo_formato").change(tipo_subformato);
+
+    $("#subtipo_formato_select").change(getSearchTramite);
 
     $('#lst_indice').on("click","a",ids_change);
 

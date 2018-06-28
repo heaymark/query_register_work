@@ -5,8 +5,9 @@ if(isset($todos)  && $todos == 1){
 <?php
 }else{
 ?>
-	<option value = "">Elija una Opción</option>
-<?php	
+<option value = "">Elija una Opción</option>
+	<option value = "">Todos</option>
+<?php
 }
 ?>
 <?php foreach ($items as $item){ ?>

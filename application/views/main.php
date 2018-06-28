@@ -5,9 +5,9 @@
         <div id="divMapMain"></div><!-- mapa -->
         <div id="dv_options">
           <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#ubica">Ubicación</a></li>
-            <li><a data-toggle="tab" href="#tramite">Tramite</a></li> <!-- nombre de la tab -->
-            <li><a data-toggle="tab" href="#dro">DRO</a></li> <!-- nombre de la tab -->
+            <li class="active"><a data-toggle="tab" data-tab="ubicacion" href="#ubica">Ubicación</a></li>
+            <li><a data-toggle="tab" data-tab="tramite" href="#tramite">Tramite</a></li> <!-- nombre de la tab -->
+            <li><a data-toggle="tab" data-tab="dro" href="#dro">DRO</a></li> <!-- nombre de la tab -->
           </ul>
           <div class="tab-content">
             <!-- informacion del direccion -->
@@ -42,22 +42,18 @@
                       <!-- <select id="tformato" name="tformato" class="form-control"></select> -->
                       <select id="tipo_formato" name="tipo_formato" class="form-control" style="width:100%;" required >
                         <option value="">Seleccionar</option>
-                          <?php
-                          foreach($idtipoprocesos_array as $idtipoprocesos_a){
-                          ?>
-                            <option value="<?php echo $idtipoprocesos_a['IDTIPOPROCESO']?>" <?php if($idtipoprocesos_a['IDTIPOPROCESO'] == $idtipopproceso){echo "selected";}?> ><?php echo $idtipoprocesos_a['DESCRIPCION']?></option>
-                          <?php
-                          }
-                          ?>
                       </select>
                     </div>
                     <div class="form-group">
                         <label>Subtipo Formato</label>
-                        <select id="tsubformato" name="tsubformato" class="form-control">
+                        <!-- <select id="tsubformato" name="tsubformato" class="form-control">
                           <option value=""></option>
+                        </select> -->
+                        <select id="subtipo_formato_select" name="subtipo_formato_select" class="form-control" style="width:100%;" required >
+                          <option value="">Seleccionar</option>
                         </select>
                     </div>
-                    <button type="button" id="btramite" class="pull-right"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Ir a</button>
+                    <!--<button type="button" id="btramite" class="pull-right"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Ir a</button>-->
                   </span>
                 </div>
               </div>
