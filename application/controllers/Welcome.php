@@ -15,7 +15,6 @@ class Welcome extends CI_Controller {
 	}
 
 	public function manifestacion_tipob(){
-		// $this->load->view('manifestacion/manifestacion_tipo_b');
 		$this->load->model('model_selects/model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_tipoB();
 		$data['items']=$expediente;
@@ -23,7 +22,6 @@ class Welcome extends CI_Controller {
 	}
 
 	public function manifestacion_tipoc(){
-		// $this->load->view('manifestacion/manifestacion_tipo_c');
 		$this->load->model('model_selects/model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_tipoC();
 		$data['items']=$expediente;
@@ -31,7 +29,6 @@ class Welcome extends CI_Controller {
 	}
 
 	public function licencia_construccion(){
-		// $this->load->view('manifestacion/licencia_construccion');
 		$this->load->model('model_selects/model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_licencia_construccion();
 		$data['items']=$expediente;
@@ -39,7 +36,6 @@ class Welcome extends CI_Controller {
 	}
 
 	public function otras_responsivas(){
-		// $this->load->view('manifestacion/otras_responsivas');
 		$this->load->model('model_selects/model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_otras_responsivas();
 		$data['items']=$expediente;
@@ -47,16 +43,15 @@ class Welcome extends CI_Controller {
 	}
 
 	public function reconstruccion_multifamiliar(){
-		// $this->load->view('manifestacion/reconstruccion_multifamiliar');
 		$this->load->model('model_selects/model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_reconstruccion_vivienda();
 		$data['items']=$expediente;
 		$this->load->view('components/selects',$data);
 	}
 
-  public function gettramites(){
+  	public function gettramites(){
 		$tipoformato = $_POST["tformato"];
-  	$tiposubformato = $_POST["tsubformato"];
+  		$tiposubformato = $_POST["tsubformato"];
 		$this->load->model('tramite_model/tramite_model','tramitemodel');
 		$expediente=$this->tramitemodel->get_tramites($tipoformato,$tiposubformato);
 		$ids_tramites = "";
@@ -65,7 +60,6 @@ class Welcome extends CI_Controller {
 		}
 		$ids_tramites = trim($ids_tramites,",");
 		echo $ids_tramites;
-		//$this->load->view('components/selects',$data);
+  	}
 
-  }
 }

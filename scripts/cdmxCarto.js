@@ -137,6 +137,19 @@ cdmxCarto.prototype = {
         });
 	},
 
+    getFile:function (table,format="shp",attribute=""){
+        var url = "https://"+this._user+".carto.com/api/v2/sql?q=select * from "+table+"&format="+format;
+        $.fileDownload(url, {
+            httpMethod: "GET",
+            successCallback: function (responseHtml, url) {
+                alert("Descargando");
+            },
+            failCallback: function (responseHtml, url) {
+                alert("Fallo en  la descargar favor de intentar de nuevo");
+            }
+        });
+    },
+
     renderMapVis:function(callback){
         //this._objlayerBase = L.tileLayer(this._layerbase,this._paramlayerbase);
 
@@ -149,4 +162,5 @@ cdmxCarto.prototype = {
             console.log(err);
         });
 	}
+
 };

@@ -10,6 +10,8 @@ $(function(){
     $('#dgiFilterSearch').on("click",getSearch);
 
     $('#btramite').on("click",getSearchTramite);
+    
+    // $('#bdro').on("click",graph_indice);
 
     $('[data-tab=tramite]').on("click",tipo_formato);
 
@@ -20,4 +22,5 @@ $(function(){
     $('#lst_indice').on("click","a",ids_change);
 
     initial();
+    graph_indice();
 });

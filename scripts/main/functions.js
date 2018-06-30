@@ -247,6 +247,7 @@ tipo_formato = function(){
         async: false,
         success: function(res){
             $('#tipo_formato').html(res);
+            $('#subtipo_formato_select').empty();
         }
     });
 }
@@ -351,4 +352,64 @@ getSearchTramite = function (){
           //$('#subtipo_formato_select').html(res);
       }
   });
+}
+
+getfile = function(elem){
+    objMap.getFile($(elem).attr("data-table"),$(elem).attr("data-format"));
+}
+
+graph_line = function(data,titletext){
+
+    graphserieline(data.rows,"container",titletext);
+}
+
+graph_emision = function(anio){
+    var sql = "SELECT delegacion as categories, descripcion as series,sum(otorgados) as total  FROM develop.beneficios_emision_2012_2018 where ano = "+anio+
+        " group by delegacion,descripcion order by delegacion,descripcion ";
+    var titletext = {
+        title: "Benificios emision "+anio,
+        subtitle:"",
+        xaxis: "",
+        yaxis: "",
+    };
+    objMap.tosql(users,sql,graph_line,[titletext]);
+}
+
+
+graph_drill = function(data,titletext) {
+    graphdrill(data.rows, "container", titletext);
+}
+
+graph_indice = function(anio){
+    var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre";
+    var titletext = {
+        title: "Total de obras por delegacion",
+        subtitle:"",
+        xaxis: "",
+        yaxis: "",
+    }
+    objMap.tosql(users,sql,graph_drill,[titletext]);
+}
+
+map_change = function(){
+    var layer = $("#sel_tematico").data("value");
+    var anio = $("#sel_anio").data("value");
+
+    switch (layer){
+        case 0:
+
+        break;
+        case 1:
+
+        break;
+    }
+
+    var lyrJson = {
+        sql:sql,
+        cartocss:cartocss
+    }
+
+    objMap.toLyrSET(0,lyrJson);
+    $("#title_page").html(title);
+    $("#title_anio_page").html(anio);
 }

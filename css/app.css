@@ -154,3 +154,17 @@ input{
   left:12px;
   z-index: 2;
 }
+
+#dvdownload{
+  position: absolute;
+  top: 42px;
+  right:42px;
+  z-index: 2;
+}
+
+#toolsgraphics{
+  position: absolute;
+  bottom: 42px;
+  right:42px;
+  z-index: 2;
+}

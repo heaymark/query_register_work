@@ -39,16 +39,12 @@
                   <span class="col-xs-12">
                     <div class="form-group">
                       <label>Tipo Formato:</label>
-                      <!-- <select id="tformato" name="tformato" class="form-control"></select> -->
                       <select id="tipo_formato" name="tipo_formato" class="form-control" style="width:100%;" required >
                         <option value="">Seleccionar</option>
                       </select>
                     </div>
                     <div class="form-group">
                         <label>Subtipo Formato</label>
-                        <!-- <select id="tsubformato" name="tsubformato" class="form-control">
-                          <option value=""></option>
-                        </select> -->
                         <select id="subtipo_formato_select" name="subtipo_formato_select" class="form-control" style="width:100%;" required >
                           <option value="">Seleccionar</option>
                         </select>
@@ -72,8 +68,24 @@
                 </div>
               </div>
             </div>
-
+          </div><!-- Fin tabs -->
+        </div>
+        <!--  -->
+        <div id="dvdownload" class="tab-pane">
+          <div id="download" class="panel panel-default">
+          <div id="toolsdownload"  class="panel-body">
+            <h5>Seleccione un tipo de archivo a exportar:</h5>
+              <button class="button download" data-table='"develop".dro_tramites' data-format="csv" onclick="getfile(this);">csv</button>
+              <button class="button download" data-table='"develop".dro_tramites' data-format="shp" onclick="getfile(this);">shp</button>
+              <button class="button download" data-table='"develop".dro_tramites' data-format="kml" onclick="getfile(this);">kml</button>
+              <button class="button download" data-table='"develop".dro_tramites' data-format="svg" onclick="getfile(this);">svg</button>
+              <button class="button download" data-table='"develop".dro_tramites' data-format="geojson" onclick="getfile(this);">geojson</button>
           </div>
+          </div>
+        </div>
+        <!-- -->
+        <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4">
+          <div id="container"></div>
         </div>
       </div>
     </div>
@@ -93,3 +105,8 @@
       </div>
 </div>
 <div id="googlemap" style="width:300px;heigth:400px;"></div>
+
+<script>
+  // graphserieline("","","container","");
+</script>
+
