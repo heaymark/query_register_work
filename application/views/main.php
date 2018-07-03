@@ -106,7 +106,3 @@
 </div>
 <div id="googlemap" style="width:300px;heigth:400px;"></div>
 
-<script>
-  // graphserieline("","","container","");
-</script>
-

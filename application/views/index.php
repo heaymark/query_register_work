@@ -16,6 +16,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php  $this->load->view("layout/header"); ?>
 	<?php  $this->load->view($view); ?>
 	<?php  $this->load->view("layout/footer"); ?>
+	<script src="scripts/route.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB2cjxQ5RpEyBg0BUAGiUKX3Lm5T2_0ySQ&libraries=places&callback=mapInit"></script>
 	<script type="text/javascript" src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fileDownload/1.4.2/jquery.fileDownload.min.js"></script>
@@ -29,6 +31,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script type="text/javascript" src="scripts/global.js"></script>
 	<script type="text/javascript" src="scripts/cdmxCarto.js"></script>
 	<script type="text/javascript" src="scripts/graphics.js"></script>
+	<script type="text/javascript" src="scripts/google.js"></script>
+	<script type="text/javascript" src="scripts/route.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/global.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/functions.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/events.js"></script>

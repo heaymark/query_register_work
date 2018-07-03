@@ -93,7 +93,8 @@ function coordsUbicacion(latlon){
 
     objMap._map.setView(ptInicial,13);
     if (mkrInicial == undefined ){
-        var mkrInicial = L.marker(ptInicial,{icon:iconPosicion,draggable: true });
+        // var mkrInicial = L.marker(ptInicial,{icon:iconPosicion,draggable: true });
+        var mkrInicial = L.marker(ptInicial);
 
         mkrInicial.addTo(objMap._map);
         //mkrInicial.on('drag', markerDrag);
@@ -103,7 +104,7 @@ function coordsUbicacion(latlon){
         mkrInicial.on('dragend', markerDrag);
         //moveMarker.on('dragstart', markerDown);
         //moveMarker.on('dragend', markerOut);
-        infoPunto(latlon);
+        // infoPunto(latlon);
     } else {
         var ptPoint = L.latLng(latInicial,lonInicial);
         mkrInicial.setLatLng(ptPoint);
@@ -331,9 +332,7 @@ tipo_subformato = function() {
             //$("#btn_accion").css("display", "none");
             break;
     }
-    
 }
-
 
 getSearchTramite = function (){
   var tipo_formato = $("#tipo_formato").val();
@@ -341,7 +340,7 @@ getSearchTramite = function (){
   var data = {tformato:tipo_formato, tsubformato:tipo_subformato}
   var url = $('#baseUrl').val()+'welcome/gettramites/';
 
-  $.ajax({
+    $.ajax({
       url:url,
       data:data,
       type: 'post',
@@ -349,12 +348,20 @@ getSearchTramite = function (){
       async: false,
       success: function(res){
         objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
-          //$('#subtipo_formato_select').html(res);
+        var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre;";
+        var titletext = {
+            title: "Total de obras por delegacion",
+            subtitle:"",
+            xaxis: "",
+            yaxis: "",
+        }        
+        objMap.tosql(users,sql,graph_drill,[titletext]);
       }
-  });
+    });
 }
 
 getfile = function(elem){
+
     objMap.getFile($(elem).attr("data-table"),$(elem).attr("data-format"));
 }
 
@@ -375,12 +382,12 @@ graph_emision = function(anio){
     objMap.tosql(users,sql,graph_line,[titletext]);
 }
 
-
 graph_drill = function(data,titletext) {
+
     graphdrill(data.rows, "container", titletext);
 }
 
-graph_indice = function(anio){
+graph_indice = function(){
     var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre";
     var titletext = {
         title: "Total de obras por delegacion",
