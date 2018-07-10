@@ -55,16 +55,52 @@
               </div>
             </div>
             <!-- informacion del dro -->
-            <div id="dro" class="tab-pane">
+            <div id="dro" class="tab-pane" >
               <div class="panel panel-default">
                 <div class="panel-body">
                   <span class="col-xs-12">
                     <div class="form-group">
                       <label>DRO:</label>
-                      <select id="search_dro" name="search_dro" class="form-control"></select>
+                      <input type="text" id="numerodedro" name="numerodedro" class="form-control">
+                      <!-- <select id="numerodedro" name="numerodedro" class="form-control"></select> -->
                     </div>
                     <button type="button" id="bdro" class="pull-right"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Ir a</button>
                   </span>
+                </div>
+              </div>
+              <div id="info_dro" class="panel panel-default" style="display: none;"><!--   -->
+                
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-sm-12 col-md-12"><h4 id="name_dro"> </h4> <button id="close_panel" type="button" class="btn btn-danger btn-xs"> X </button></div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-md-4">Num:</div> 
+                    <div class="col-md-4 col-md-offset-4" id="num_dro"> </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-8">Fecha Vigencia:</div> 
+                    <div class="col-md-4" id="fecha_vigencia">04/07/2018</div>                    
+                  </div>
+                  <br>
+
+                  <div class="row">
+                    <div class="col-md-12" id="list_tramites">
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">Total Obras</div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 text-right" id="total_obra"> </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2 text-left">m<sup>2</sup></div>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: 45%; height:60%;">
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -84,9 +120,11 @@
           </div>
         </div>
         <!-- -->
-        <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4">
+        <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4" style="display: none;">
+          <button type="button" id="close_graphic" class="btn btn-danger btn-xs" style="display: none;"> X </button>
           <div id="container"></div>
         </div>
+        <div id="btn_graf" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-stats"></span></div>
       </div>
     </div>
   </div>
@@ -97,10 +135,12 @@
     <div class="modal-content">
               <div id="mdlHeader" class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 id="mdlTitle" class="modal-title"  style="background-color:#353535;color:#FFFFFF;">Información de la infraestructura</h4>
+                  <h4 id="mdlTitle" class="modal-title" >Información </h4><!-- style="background-color:#353535;color:#FFFFFF;" -->
               </div>
               <div id="mdlContent" class="modal-body"></div>
-              <div id="mdlFooter" class="modal-footer"></div>
+              <div id="mdlFooter" class="modal-footer">
+                <div class="show_pdf"></div>
+              </div>
           </div>
       </div>
 </div>

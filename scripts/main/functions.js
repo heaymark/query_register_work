@@ -17,19 +17,13 @@ var callbackMap = function(layer){
 
     lyrInfra = layer.getSubLayer(6);
     lyrInfra.setInteraction(true);
-    lyrInfra.setInteractivity(['cartodb_id','the_geom','the_geom_webmercator','calle','codigo_postal','colonia','cuenta_predial','delegacion','id_proceso','latitud','longitud']);
-    /*lyrInfra.setInteseractivity('cartodb_id,id_area_periferica,id_dir,id_delegacion,nombre_centro,domicilio,coordenadas,streetview,pagina_web,director,' +
-        'administrador,director_cadi,fecha_apertua,' +
-        'personal_base,personal_confianza_honorarios,areas_atencion,superficio,aforo,personas_atendidas,' +
-        'area_administrativa,centro_cdmx,cadi,ubr,primera_infancia,consejo_tutela,horario_bebe,lugares_bebe,camiones_bebe,' +
-        'camiones_bebe_ant,id_usr,id_usr_mod,fec_alta,fec_modificacion,becas,id_becas,biometrico,alias,areaid');*/
+    lyrInfra.setInteractivity(['cartodb_id','the_geom','the_geom_webmercator','calle','codigo_postal','colonia','cuenta_predial','delegacion','id_proceso','latitud','longitud','num_exterior','num_interior']);
 
     lyrInfra.on('featureClick',function(evt,latlng,pos,data,layers){
         $("#mdlContent").html('');
-	    _.templateSettings.variable = "item";
-        var template = _.template($("#infraestructura").html());
-        $("#mdlContent").append(template(data));
-        $("#mdl").modal("show");
+
+            $.get($("#baseUrl").val()+"welcome/getInfoTramite",{idproceso:data.id_proceso},getTramiteInfo,"json");
+
     });
 
     lyrInfra.on('mouseover',function(){
@@ -39,13 +33,6 @@ var callbackMap = function(layer){
     lyrInfra.on('mouseout',function(){
         $("#divMapMain").css('cursor','grab');
     });
-
-    /*jsonCercano = {
-        sql: "WITH puntos AS (SELECT cartodb_id, the_geom, the_geom_webmercator FROM dro_tramites  ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint("+lon+","+lat+"),4326) ASC LIMIT 3) SELECT null as cartodb_id, ST_MakeLine(ST_Transform(ST_SetSRID(ST_MakePoint("+lon+","+lat+"),4326),3857),the_geom_webmercator) as the_geom_webmercator FROM puntos",
-        cartocss: styleCercano
-    };
-    lyrCercanos = layer.getSubLayer(6);
-    lyrCercanos.set(jsonCercano);*/
 
     $.get($("#baseUrl").val()+"carto/getDelegaciones",getDelegacion,"json");
 
@@ -161,6 +148,13 @@ function fnExtentInicial(pt1,pt2){
     return  lyrExtent.getBounds();
 }
 
+getTramiteInfo = function (response) {
+    _.templateSettings.variable = "item";
+    var template = _.template($("#infraestructura").html());
+    $("#mdlContent").append(template(response));
+    $("#mdl").modal("show");
+}
+
 getDelegacion = function(data){
     for(idx in data.rows){
         $("<option/>",{"value":data.rows[idx].conse,"text":data.rows[idx].nombre}).appendTo("#dgiCmbDel");
@@ -249,6 +243,22 @@ tipo_formato = function(){
         success: function(res){
             $('#tipo_formato').html(res);
             $('#subtipo_formato_select').empty();
+        }
+    });
+}
+
+download_formato = function(evt) {
+    var idproceso = $(this).attr('data-id');
+    var data = {idproceso_:idproceso}
+    var url = $('#baseUrl').val()+'reporte/index/';
+    $.ajax({
+        url:url,
+        data:data,
+        type: 'post',
+        dataType: 'html',
+        async: false,
+        success: function(res){
+            $('#show_pdf').html(res);
         }
     });
 }
@@ -354,10 +364,55 @@ getSearchTramite = function (){
             subtitle:"",
             xaxis: "",
             yaxis: "",
-        }        
+        }
         objMap.tosql(users,sql,graph_drill,[titletext]);
       }
     });
+}
+
+getSearchDRO = function(){
+  var numero_dro = $("#numerodedro").val();
+  var data = {ndro:numero_dro}
+  var url = $('#baseUrl').val()+'welcome/getdro/';
+  var total = 0;
+  var num_list= 1;
+
+    $.ajax({
+      url:url,
+      data:data,
+      type:'post',
+      dataType:'json',
+      // encoding:"UTF-8",
+      // contentType: "text/json; charset=UTF-8",
+      async: false,
+      success: function(res){
+        $('#info_dro').fadeIn(2000);
+        $("#name_dro").html(res[0]["NOMBRE"]+" "+res[0]["APELLIDO_PATERNO"]+" "+res[0]["APELLIDO_MATERNO"]);
+        $("#num_dro").html(res[0]["NUMEROREGISTRO"]);
+        $("#fecha_vigencia").html("05/07/2018");
+        // console.log(res['rows'].length);
+
+        for (var i = 0; i < res['rows'].length; i++) {
+            // console.log(res['rows'][i]["delegacion"]);
+            $("#list_tramites").append("<p>"+num_list+".-"+res[i]['DESCRIPCION']+"<b> TOTAL:</b><span>"+res[i]['SUPERFICIE']+"M</span><sup>2</sup><br><a class=\"id_ubicacion\" data-long=\""+res['rows'][i]["longitud"]+"\" data-lat=\""+res['rows'][i]["latitud"]+"\"><span class=\"text-danger glyphicon glyphicon-globe\"></span> <span class=\"text-danger\"> Centrar en el mapa</span></a></p><br>");
+
+            total += (parseFloat(res[i]['SUPERFICIE']));
+            num_list++;
+        }
+
+        $("#total_obra").html(total);
+        // console.log(res[0]["DESCRIPCION"]);
+        // console.log(res['rows'][0]["delegacion"]);
+      }
+    });
+}
+
+fnMostrarPunto = function(evt){
+    // console.log("Entre");
+    var longitud = $(this).attr('data-long');
+    var latitud = $(this).attr('data-lat');
+    var ptPoint = L.latLng(latitud,longitud);
+    objMap._map.setView(ptPoint,20);
 }
 
 getfile = function(elem){
@@ -388,6 +443,11 @@ graph_drill = function(data,titletext) {
 }
 
 graph_indice = function(){
+    $("#btn_graf").hide();
+    // $("#btn_graf").slideUp();//ocultar
+    // $("#close_graphic,#toolsgraphics").show();
+    $("#close_graphic,#toolsgraphics").slideDown();//mostrar
+
     var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre";
     var titletext = {
         title: "Total de obras por delegacion",
@@ -396,6 +456,19 @@ graph_indice = function(){
         yaxis: "",
     }
     objMap.tosql(users,sql,graph_drill,[titletext]);
+}
+
+graph_close = function() {
+    $("#close_graphic,#toolsgraphics").hide();    
+    // $("#close_graphic,#toolsgraphics").slideUp();//mostrar
+    // $("#btn_graf").show();
+    $("#btn_graf").slideDown();//ocultar
+
+}
+
+panel_close = function() {
+    $("#info_dro").fadeOut();
+    $("#name_dro,#num_dro,#fecha_vigencia,#list_tramites,#total_obra").html('');
 }
 
 map_change = function(){

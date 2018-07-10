@@ -10,6 +10,72 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 	<link rel="stylesheet" type="text/css" href="css/<?= $view ?>/view.css">
+	<script type="template/html" id="infraestructura">
+		<form id="form_info" name="form_info">
+			<div class="row ">
+				<dl class="form-group col-xs-12">
+					<dt>Formato</dt>
+					<dd><%- item.DESCRIPCION_SUBPROCESO %></dd>
+				</dl>
+			</div>
+			<div class="row">
+				<dl class="form-group col-xs-12">
+					<dt>Cuenta Predial</dt>
+					<dd><%- item.CUENTAPREDIO %></dd>
+				</dl>
+			</div>
+			<div class="row">
+				<dl class="form-group col-xs-6">
+					<dt>Calle</dt>
+					<dd><%- item.CALLE %></dd>
+				</dl>
+				<dl class="form-group col-xs-6">
+					<dt>Número Exterior</dt>
+					<dd><%- item.NUMEROEXTERNO %></dd>
+				</dl>				
+			</div>
+			<div class="row">
+				<dl class="form-group col-xs-6">
+					<dt>Número Interior</dt>
+					<dd><%- item.NUMEROINTERNO %></dd>
+				</dl>
+				<dl class="form-group col-xs-6">
+					<dt>Colonia</dt>
+					<dd><%- item.COLONIA %></dd>
+				</dl>
+			</div>
+			<div class="row">
+				<dl class="form-group col-xs-6">
+					<dt>Delegacion</dt>
+					<dd><%- item.DELEGACION %></dd>
+				</dl>
+				<dl class="form-group col-xs-6">
+					<dt>Codigo Postal</dt>
+					<dd><%- item.CODIGOPOSTAL %></dd>
+				</dl>
+			</div>
+			<div class="row">
+				<dl class="form-group col-xs-6">
+					<dt>Superficie</dt>
+					<dd><%- item.SUPERFICIE%></dd>
+				</dl>
+				<dl class="form-group col-xs-6">
+					<dt>Folio</dt>
+					<dd><%- item.FOLIO%></dd>
+				</dl>
+			</div>
+			<div class="row">
+				<dl class="form-group col-xs-12">
+					<dt>Descargar Formato</dt>
+					<dd id="reportepdf">
+						<a class="dowload_report btn btn-primary" data-id="<%- item.IDPROCESO %>" target="_blank" href="<?php echo base_url('reporte/index?idproceso_=')?><%- item.IDPROCESO %>"> 
+							<span class="glyphicon glyphicon-file"></span> 
+						</a>
+					</dd>
+				</dl>
+			</div>
+		</form>
+	</script>
 </head>
 <body>
 	<input type="hidden" name="baseUrl" id="baseUrl" value="<?php echo base_url();?>">

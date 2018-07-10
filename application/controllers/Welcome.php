@@ -62,4 +62,21 @@ class Welcome extends CI_Controller {
 		echo $ids_tramites;
   	}
 
+  	public function getdro(){
+		$num_dro = $_POST["ndro"];
+		// echo $num_dro; exit();
+		$this->load->model('tramite_model/tramite_model','tramitemodel');
+		$resultado=$this->tramitemodel->get_dro($num_dro);
+
+		echo json_encode($resultado);
+  	}
+
+  	public function getInfoTramite(){
+		$num_proceso = $_GET["idproceso"];
+		// echo $num_proceso; exit();
+		$this->load->model('tramite_model/tramite_model','tramitemodel');
+		$resultado=$this->tramitemodel->info_direccion($num_proceso);
+
+		echo json_encode($resultado[0]);
+  	}
 }

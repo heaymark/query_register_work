@@ -1,3 +1,4 @@
+var objMap;
 var position  = {
     coords:{
         latitude: 19.3899839,
