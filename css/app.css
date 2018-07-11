@@ -179,3 +179,7 @@ input{
 #total_obra{
     text-align: left;
 }
+
+#list_tramites{
+    height: 200px;
+}

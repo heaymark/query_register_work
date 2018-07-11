@@ -337,6 +337,8 @@ tipo_subformato = function() {
         case "":
             $('#subtipo_formato_select').empty();
             objMap.toLyrSQL(6,"SELECT * FROM dro_tramites");
+            getSearchTramite();
+
             //$('#tipo_formato').empty();
             // $('[data-modal=accion]').attr('id','btn_accion');
             //$("#btn_accion").css("display", "none");
@@ -382,33 +384,40 @@ getSearchDRO = function(){
       data:data,
       type:'post',
       dataType:'json',
-      // encoding:"UTF-8",
-      // contentType: "text/json; charset=UTF-8",
       async: false,
+      beforeSend: function(){
+         $("#bdro").append("<i id=\"spinner\" class=\"fa fa-spinner fa-spin\"></i>");
+      },
       success: function(res){
+        $("#spinner").remove();
         $('#info_dro').fadeIn(2000);
         $("#name_dro").html(res[0]["NOMBRE"]+" "+res[0]["APELLIDO_PATERNO"]+" "+res[0]["APELLIDO_MATERNO"]);
         $("#num_dro").html(res[0]["NUMEROREGISTRO"]);
         $("#fecha_vigencia").html("05/07/2018");
-        // console.log(res['rows'].length);
+        // console.log(res['rows'].length);5
 
         for (var i = 0; i < res['rows'].length; i++) {
-            // console.log(res['rows'][i]["delegacion"]);
+
             $("#list_tramites").append("<p>"+num_list+".-"+res[i]['DESCRIPCION']+"<b> TOTAL:</b><span>"+res[i]['SUPERFICIE']+"M</span><sup>2</sup><br><a class=\"id_ubicacion\" data-long=\""+res['rows'][i]["longitud"]+"\" data-lat=\""+res['rows'][i]["latitud"]+"\"><span class=\"text-danger glyphicon glyphicon-globe\"></span> <span class=\"text-danger\"> Centrar en el mapa</span></a></p><br>");
 
             total += (parseFloat(res[i]['SUPERFICIE']));
             num_list++;
         }
 
-        $("#total_obra").html(total);
-        // console.log(res[0]["DESCRIPCION"]);
-        // console.log(res['rows'][0]["delegacion"]);
+        $("#total_metros").html(total);
+        $("#total_obra").html(res['rows'].length);
+
+      },
+      error: function() {
+        $("#spinner").remove();
+        alert("OPPS! Ocurrio un error! falta ID");
       }
+
+
     });
 }
 
 fnMostrarPunto = function(evt){
-    // console.log("Entre");
     var longitud = $(this).attr('data-long');
     var latitud = $(this).attr('data-lat');
     var ptPoint = L.latLng(latitud,longitud);
@@ -463,11 +472,11 @@ graph_close = function() {
     // $("#close_graphic,#toolsgraphics").slideUp();//mostrar
     // $("#btn_graf").show();
     $("#btn_graf").slideDown();//ocultar
-
 }
 
 panel_close = function() {
-    $("#info_dro").fadeOut();
+    // $("#info_dro").fadeOut();
+    $("#info_dro").hide();
     $("#name_dro,#num_dro,#fecha_vigencia,#list_tramites,#total_obra").html('');
 }
 

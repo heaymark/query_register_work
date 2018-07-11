@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap-theme.min.css" media="screen" title="no title" charset="utf-8">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/app.css">
 	<link rel="stylesheet" type="text/css" href="css/<?= $view ?>/view.css">
 	<script type="template/html" id="infraestructura">
@@ -93,7 +94,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts-more.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts-3d.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/js/modules/exporting.js"></script>
+	<!-- <script type="text/javascript" src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script type="text/javascript" src="https://code.highcharts.com/modules/export-data.js"></script> -->
 	<script type="text/javascript" src="scripts/global.js"></script>
 	<script type="text/javascript" src="scripts/cdmxCarto.js"></script>
 	<script type="text/javascript" src="scripts/graphics.js"></script>

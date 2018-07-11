@@ -25,10 +25,8 @@
                           <option value=""></option>
                         </select>
                     </div>
-
-                    <button type="button" id="dgiFilterSearch" class="pull-right"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Ir a</button>
+                    <button type="button" id="dgiFilterSearch" class="pull-right btn btn-primary"> Ir a <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
                   </span>
-
                 </div>
               </div>
             </div>
@@ -61,18 +59,21 @@
                   <span class="col-xs-12">
                     <div class="form-group">
                       <label>DRO:</label>
-                      <input type="text" id="numerodedro" name="numerodedro" class="form-control">
+                      <input type="text" id="numerodedro" name="numerodedro" class="form-control" required>
                       <!-- <select id="numerodedro" name="numerodedro" class="form-control"></select> -->
                     </div>
-                    <button type="button" id="bdro" class="pull-right"><i class="fa fa-hand-o-right" aria-hidden="true"></i>Ir a</button>
+                    <div class="form-group">
+                    </div>
+                    <button type="button" id="bdro" class="pull-right btn btn-primary"> Ir a  </button>
                   </span>
                 </div>
               </div>
+              <!-- Panel de informacion -->
               <div id="info_dro" class="panel panel-default" style="display: none;"><!--   -->
-                
                 <div class="panel-heading">
                   <div class="row">
-                    <div class="col-sm-12 col-md-12"><h4 id="name_dro"> </h4> <button id="close_panel" type="button" class="btn btn-danger btn-xs"> X </button></div>
+                    <div class="col-sm-10 col-md-10"><h4 id="name_dro"> </h4> </div>
+                    <div class="col-sm-2 col-md-2"><button id="close_panel" type="button" class="btn btn-danger btn-xs"> X </button></div>
                   </div>
                 </div>
                 <div class="panel-body">
@@ -87,13 +88,17 @@
                   <br>
 
                   <div class="row">
-                    <div class="col-md-12" id="list_tramites">
+                    <div class="col-md-12 pre-scrollable" id="list_tramites">
                     </div>
                   </div>
                   
                   <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-6">Total Obras</div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 text-right" id="total_obra"> </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">Total de Obras</div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 text-end" id="total_obra"> </div>                    
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">Total Metros</div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 text-end" id="total_metros"> </div>
                     <div class="col-xs-2 col-sm-2 col-md-2 text-left">m<sup>2</sup></div>
                   </div>
                   <div class="progress">
@@ -106,7 +111,7 @@
             </div>
           </div><!-- Fin tabs -->
         </div>
-        <!--  -->
+        <!-- Download kml,csv  -->
         <div id="dvdownload" class="tab-pane">
           <div id="download" class="panel panel-default">
           <div id="toolsdownload"  class="panel-body">
@@ -119,7 +124,7 @@
           </div>
           </div>
         </div>
-        <!-- -->
+        <!-- Grafica -->
         <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4" style="display: none;">
           <button type="button" id="close_graphic" class="btn btn-danger btn-xs" style="display: none;"> X </button>
           <div id="container"></div>

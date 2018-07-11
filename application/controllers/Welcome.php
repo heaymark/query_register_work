@@ -64,7 +64,6 @@ class Welcome extends CI_Controller {
 
   	public function getdro(){
 		$num_dro = $_POST["ndro"];
-		// echo $num_dro; exit();
 		$this->load->model('tramite_model/tramite_model','tramitemodel');
 		$resultado=$this->tramitemodel->get_dro($num_dro);
 

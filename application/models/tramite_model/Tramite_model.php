@@ -6,7 +6,9 @@ class Tramite_model extends CI_Model{
 	}
 
   public function get_tramites($tipoformato,$tiposubformato){
-    if ($tiposubformato == "") {
+    if($tiposubformato == "" && $tipoformato == ""){
+      $sql = "SELECT IDPROCESO FROM PROCESO ORDER BY IDPROCESO";
+    }elseif ($tiposubformato == "") {
       $sql = "SELECT IDPROCESO FROM PROCESO WHERE IDTIPOPROCESO = ".$tipoformato." ORDER BY IDPROCESO";
     }else{
       $sql = "SELECT IDPROCESO FROM PROCESO WHERE IDTIPOPROCESO = ".$tipoformato." AND IDTIPOSUBPROCESO = ".$tiposubformato." ORDER BY IDPROCESO";
@@ -48,10 +50,17 @@ class Tramite_model extends CI_Model{
 
     $result = $this->db->query($sql)->result_array();
     
+    $ids_procesos = "";
+    foreach ($result as $key => $value) {
+      $ids_procesos .= $value["IDPROCESO"].",";
+    }
+    $ids_procesos = trim($ids_procesos,",");
+
     $this->load->model('carto_model/carto_model','objCarto');
-    $rs = $this->objCarto->toSql("SELECT calle, codigo_postal, colonia, cuenta_predial, delegacion, id_proceso, latitud, longitud, num_exterior, num_interior, usuario_creador FROM dro_tramites WHERE id_proceso = ".$result[0]["IDPROCESO"]."");
+    $rs = $this->objCarto->toSql("SELECT calle, codigo_postal, colonia, cuenta_predial, delegacion, id_proceso, latitud, longitud, num_exterior, num_interior, usuario_creador FROM dro_tramites WHERE id_proceso IN (".$ids_procesos.")");
     $json_rs = json_decode($rs, true);
     $total_result = array_merge($result, $json_rs);
+
     return $total_result;
   }
 
