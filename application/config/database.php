@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
+	'hostname' => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.14.124)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
 	'username' => 'OWDRO',
 	'password' => 'OWDRO',
 	'database' => 'OWDRO',
