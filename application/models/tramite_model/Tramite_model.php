@@ -56,11 +56,10 @@ class Tramite_model extends CI_Model{
     }
     $ids_procesos = trim($ids_procesos,",");
 
-    $this->load->model('carto_model/carto_model','objCarto');
-    $rs = $this->objCarto->toSql("SELECT calle, codigo_postal, colonia, cuenta_predial, delegacion, id_proceso, latitud, longitud, num_exterior, num_interior, usuario_creador FROM dro_tramites WHERE id_proceso IN (".$ids_procesos.")");
+    $this->load->model('Carto_model/Carto_model','objCarto');
+    $rs = $this->objCarto->toSql("SELECT calle, codigo_postal, colonia, cuenta_predial, delegacion, id_proceso, latitud, longitud, num_exterior, num_interior FROM dro_tramites WHERE id_proceso IN (".$ids_procesos.")");
     $json_rs = json_decode($rs, true);
     $total_result = array_merge($result, $json_rs);
-
     return $total_result;
   }
 

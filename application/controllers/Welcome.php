@@ -8,42 +8,42 @@ class Welcome extends CI_Controller {
 	}
 
 	public function catalogo_procesos(){
-		$this->load->model('model_selects/model_selects','modelSelects');
+		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_proceso();
 		$data['items']=$expediente;
 		$this->load->view('components/selects',$data);
 	}
 
 	public function manifestacion_tipob(){
-		$this->load->model('model_selects/model_selects','modelSelects');
+		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_tipoB();
 		$data['items']=$expediente;
 		$this->load->view('components/selects',$data);
 	}
 
 	public function manifestacion_tipoc(){
-		$this->load->model('model_selects/model_selects','modelSelects');
+		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_tipoC();
 		$data['items']=$expediente;
 		$this->load->view('components/selects',$data);
 	}
 
 	public function licencia_construccion(){
-		$this->load->model('model_selects/model_selects','modelSelects');
+		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_licencia_construccion();
 		$data['items']=$expediente;
 		$this->load->view('components/selects',$data);
 	}
 
 	public function otras_responsivas(){
-		$this->load->model('model_selects/model_selects','modelSelects');
+		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_otras_responsivas();
 		$data['items']=$expediente;
 		$this->load->view('components/selects',$data);
 	}
 
 	public function reconstruccion_multifamiliar(){
-		$this->load->model('model_selects/model_selects','modelSelects');
+		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_reconstruccion_vivienda();
 		$data['items']=$expediente;
 		$this->load->view('components/selects',$data);
@@ -52,7 +52,7 @@ class Welcome extends CI_Controller {
   	public function gettramites(){
 		$tipoformato = $_POST["tformato"];
   		$tiposubformato = $_POST["tsubformato"];
-		$this->load->model('tramite_model/tramite_model','tramitemodel');
+		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
 		$expediente=$this->tramitemodel->get_tramites($tipoformato,$tiposubformato);
 		$ids_tramites = "";
 		foreach ($expediente as $key => $value) {
@@ -64,7 +64,7 @@ class Welcome extends CI_Controller {
 
   	public function getdro(){
 		$num_dro = $_POST["ndro"];
-		$this->load->model('tramite_model/tramite_model','tramitemodel');
+		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
 		$resultado=$this->tramitemodel->get_dro($num_dro);
 
 		echo json_encode($resultado);
@@ -73,7 +73,7 @@ class Welcome extends CI_Controller {
   	public function getInfoTramite(){
 		$num_proceso = $_GET["idproceso"];
 		// echo $num_proceso; exit();
-		$this->load->model('tramite_model/tramite_model','tramitemodel');
+		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
 		$resultado=$this->tramitemodel->info_direccion($num_proceso);
 
 		echo json_encode($resultado[0]);

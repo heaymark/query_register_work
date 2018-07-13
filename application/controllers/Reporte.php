@@ -10,7 +10,7 @@ class Reporte extends CI_Controller {
   public function Index(){
     // $id_proceso = $_POST["idproceso_"];
     $id_proceso = $_GET["idproceso_"];
-    $this->load->model('tramite_model/tramite_model','tramitemodel');
+    $this->load->model('Tramite_model/Tramite_model','tramitemodel');
     $resultado=$this->tramitemodel->info_pdf($id_proceso);
     $rs = $resultado->result_array();
 
@@ -1264,7 +1264,7 @@ k) No se registrará la manifestación de construcción cuando le falte cualquie
     ## Texto presente hoja ####
     $this->pdf->SetXY(70,150);
     $this->pdf->SetFont('Arial', 'B', 7);
-    $this->pdf->Image(APPPATH.'/third_party/imagenes/telefonito.jpg',55,150,15);
+    $this->pdf->Image(APPPATH.'/third_party/imagenes/telefonito.JPG',55,150,15);
     $this->pdf->Cell(0,5, utf8_decode("    QUEJAS O DENUNCUAS"),0,0,'L',0);
     $this->pdf->SetXY(70,154);
     $this->pdf->Cell(0,4, utf8_decode(" "),0,0,'L',1);
