@@ -93,6 +93,51 @@ function graphseriebar(objdata,objCategoria,div,titleText) {
     $('#'+div).highcharts(jsonGraph);
 }
 
+function graptime(objdata,div) {
+    // var objArray = [];
+    // var data = [];
+    // var mes;
+
+    /*var usdeur = [
+        [Date.UTC(2018, 8, 1), 3],
+        [Date.UTC(2018, 8, 2), 2],
+        [Date.UTC(2018, 8, 3), 1],
+        [Date.UTC(2018, 8, 4), 4]
+    ];*/
+
+    /*for(idx in objdata){
+        mes  = parseInt(objdata[idx].mes)-parseInt(1);
+        objArray.push([Date.UTC(objdata[idx].anio, mes, objdata[idx].dia), objdata[idx].id_proceso]);
+    }*/
+
+    // console.log(usdeur);
+    // console.log(objArray);
+    console.log(objdata);
+
+    Highcharts.stockChart('container', {
+
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+                second: '%Y-%m-%d<br/>%H:%M:%S',
+                minute: '%Y-%m-%d<br/>%H:%M',
+                hour: '%Y-%m-%d<br/>%H:%M',
+                day: '%Y<br/>%m-%d',
+                week: '%Y<br/>%m-%d',
+                month: '%Y-%m',
+                year: '%Y'
+            }
+        },
+
+        rangeSelector: {
+            selected: 1
+        },
+
+        series: objdata
+    });
+
+}
+
 function graphserieline(objdata,div,titleText) {
     var ary_x = {};
     var objCategoria = [];
@@ -325,8 +370,6 @@ function graphseriebubble(objdata,div,titleText) {
     $('#'+div).highcharts(jsonGraph);
 }
 
-
-
 function graphgauge(objdata,objCategoria,div,titleText) {
 	var gaugeOptions = {
 
@@ -380,10 +423,10 @@ function graphgauge(objdata,objCategoria,div,titleText) {
             }
         }
     }
-};
+    };
 
-// The speed gauge
-var chartSpeed = Highcharts.chart(div, Highcharts.merge(gaugeOptions, {
+    // The speed gauge
+    var chartSpeed = Highcharts.chart(div, Highcharts.merge(gaugeOptions, {
     yAxis: {
         min: 0,
         max: 100,
@@ -540,5 +583,43 @@ function graphdrill(objdata, div, titletext) {
             },
             "series":ary_drill
         }
+    });
+}
+
+function createChart(seriesOptions) {
+
+    Highcharts.stockChart('container', {
+
+        rangeSelector: {
+            selected: 4
+        },
+
+        yAxis: {
+            labels: {
+                formatter: function () {
+                    return (this.value > 0 ? ' + ' : '') + this.value + '%';
+                }
+            },
+            plotLines: [{
+                value: 0,
+                width: 2,
+                color: 'silver'
+            }]
+        },
+
+        plotOptions: {
+            series: {
+                compare: 'percent',
+                showInNavigator: true
+            }
+        },
+
+        tooltip: {
+            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+            valueDecimals: 2,
+            split: true
+        },
+
+        series: seriesOptions
     });
 }

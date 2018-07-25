@@ -62,6 +62,15 @@ class Welcome extends CI_Controller {
 		echo $ids_tramites;
   	}
 
+  	public function gettimetramites(){
+		$tipoformato = $_POST["tformato"];
+  		$tiposubformato = $_POST["tsubformato"];
+  		// print_r($_POST); exit();
+		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
+		$expediente=$this->tramitemodel->get_time_tramites($tipoformato,$tiposubformato);
+		echo json_encode($expediente);
+  	}
+
   	public function getdro(){
 		$num_dro = $_POST["ndro"];
 		$this->load->model('Tramite_model/Tramite_model','tramitemodel');

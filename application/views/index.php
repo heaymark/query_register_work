@@ -91,9 +91,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" charset="utf-8"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+	<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/js/highstock.js"></script> -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highstock.src.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts-more.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.7/highcharts-3d.js"></script>
+	<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.1.1/es-modules/masters/highstock.src.js"></script> -->
+	<!-- <script src="https://code.highcharts.com/stock/highstock.js"></script> -->
 	<!-- <script type="text/javascript" src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script type="text/javascript" src="https://code.highcharts.com/modules/export-data.js"></script> -->
 	<script type="text/javascript" src="scripts/global.js"></script>
@@ -104,5 +108,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script type="text/javascript" src="scripts/<?= $view ?>/global.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/functions.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/events.js"></script>
+	<!-- <script type="text/javascript" src="https://www.highcharts.com/samples/data/usdeur.js"></script> -->
 </body>
 </html>

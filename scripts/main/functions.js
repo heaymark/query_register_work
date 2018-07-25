@@ -17,7 +17,7 @@ var callbackMap = function(layer){
 
     lyrInfra = layer.getSubLayer(6);
     lyrInfra.setInteraction(true);
-    lyrInfra.setInteractivity(['cartodb_id','the_geom','the_geom_webmercator','calle','codigo_postal','colonia','cuenta_predial','delegacion','id_proceso','latitud','longitud','num_exterior','num_interior']);
+    lyrInfra.setInteractivity(['cartodb_id','the_geom_webmercator','calle','codigo_postal','colonia','cuenta_predial','delegacion','id_proceso','latitud','longitud','num_exterior','num_interior']);
 
     lyrInfra.on('featureClick',function(evt,latlng,pos,data,layers){
         $("#mdlContent").html('');
@@ -361,6 +361,10 @@ getSearchTramite = function (){
       success: function(res){
         objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
         var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre;";
+        // var sql2 = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre,tramite.fecha_insercion,tramite.id_proceso ORDER BY tramite.fecha_insercion ASC";
+        
+        $.post($("#baseUrl").val()+"welcome/gettimetramites", data, grap_htime_2,"json");
+
         var titletext = {
             title: "Total de obras por delegacion",
             subtitle:"",
@@ -368,6 +372,7 @@ getSearchTramite = function (){
             yaxis: "",
         }
         objMap.tosql(users,sql,graph_drill,[titletext]);
+        // objMap.tosql(users,sql2,graph_time,[titletext]);
       }
     });
 }
@@ -434,16 +439,60 @@ graph_line = function(data,titletext){
     graphserieline(data.rows,"container",titletext);
 }
 
-graph_emision = function(anio){
-    var sql = "SELECT delegacion as categories, descripcion as series,sum(otorgados) as total  FROM develop.beneficios_emision_2012_2018 where ano = "+anio+
-        " group by delegacion,descripcion order by delegacion,descripcion ";
+/*graph_time  = function(data,titletext){
+    console.log(data);
+    graptime(data.rows,"container",titletext);
+}*/
+
+grap_htime_2 = function(data){
+    var objArray = [];
+    var objArrayName = [];
+    var dataCfg;
+    // console.log(data);
+    for(idx in data){
+        mes  = parseInt(data[idx].MES)-parseInt(1);
+        total = parseInt(data[idx].TOTAL);
+        objArray.push([Date.UTC(data[idx].ANIO, mes, data[idx].DIA), total]);
+        objArrayName.push(data[idx].SUBPROCESO);
+    }
+
+    dataCfg = 
+        [
+            {
+                name:objArrayName,
+                data:objArray,
+            }
+        ];
+
+    // console.log(objArray);
+    // console.log(objArrayName);
+    // console.log(dataCfg);
+
+    graptime(dataCfg,"container");
+
+}
+
+graphtime = function(){
+    $("#btn_graf,#btn_graf_2").hide();
+    // $("#btn_graf").slideUp();//ocultar
+    // $("#close_graphic,#toolsgraphics").show();
+    $("#close_graphic,#toolsgraphics").slideDown();//mostrar
+
+    var tipo_formato = $("#tipo_formato").val();
+    var tipo_subformato = $("#subtipo_formato_select").val();
+    var data = {tformato:tipo_formato, tsubformato:tipo_subformato}
+
+    /*var sql = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre,tramite.fecha_insercion,tramite.id_proceso";
     var titletext = {
-        title: "Benificios emision "+anio,
+        title: "Total de obras por tiempo",
         subtitle:"",
         xaxis: "",
         yaxis: "",
-    };
-    objMap.tosql(users,sql,graph_line,[titletext]);
+    }
+    objMap.tosql(users,sql,graph_time,[titletext]);*/
+    $.post($("#baseUrl").val()+"welcome/gettimetramites", data, grap_htime_2,"json");
+
+
 }
 
 graph_drill = function(data,titletext) {
@@ -452,7 +501,7 @@ graph_drill = function(data,titletext) {
 }
 
 graph_indice = function(){
-    $("#btn_graf").hide();
+    $("#btn_graf,#btn_graf_2").hide();
     // $("#btn_graf").slideUp();//ocultar
     // $("#close_graphic,#toolsgraphics").show();
     $("#close_graphic,#toolsgraphics").slideDown();//mostrar
@@ -470,8 +519,8 @@ graph_indice = function(){
 graph_close = function() {
     $("#close_graphic,#toolsgraphics").hide();    
     // $("#close_graphic,#toolsgraphics").slideUp();//mostrar
-    // $("#btn_graf").show();
-    $("#btn_graf").slideDown();//ocultar
+    // $("#btn_graf").show();,
+    $("#btn_graf,#btn_graf_2").slideDown();//ocultar
 }
 
 panel_close = function() {

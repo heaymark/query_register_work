@@ -125,11 +125,12 @@
           </div>
         </div>
         <!-- Grafica -->
-        <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4" style="display: none;">
+        <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4" style="display: none;"> <!--   -->
           <button type="button" id="close_graphic" class="btn btn-danger btn-xs" style="display: none;"> X </button>
-          <div id="container"></div>
+          <div id="container"></div>   <!-- style="height: 400px; min-width: 310px" -->
         </div>
-        <div id="btn_graf" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-stats"></span></div>
+        <div id="btn_graf" class="btn btn-primary btn-lg"><span class="fa fa-bar-chart" aria-hidden="true"></span></div>
+        <div id="btn_graf_2" class="btn btn-primary btn-lg"><span class="fa fa-line-chart" aria-hidden="true"></span></div>
       </div>
     </div>
   </div>

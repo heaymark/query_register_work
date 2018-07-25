@@ -27,6 +27,8 @@ $(function(){
 
     $('#btn_graf').on("click",graph_indice);
 
+    $('#btn_graf_2').on("click",graphtime);
+
     $('#close_graphic').on("click",graph_close);
     
     $('#close_panel').on("click",panel_close);

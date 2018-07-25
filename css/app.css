@@ -169,6 +169,13 @@ input{
   z-index: 2;
 }
 
+#btn_graf_2{
+  position: absolute;
+  bottom: 42px;
+  right:100px;
+  z-index: 2;
+}
+
 #close_graphic{
   position: absolute;
   bottom: 400px;
