@@ -1,6 +1,58 @@
 var callbackMap = function(layer){
     lyr = layer;
 
+    var geomTools = new L.FeatureGroup();
+    var drawControl = new L.Control.Draw({
+        position : 'topright',
+        draw : {
+            polyline: {
+                allowIntersection: false,
+                drawError: {
+                    color: '#b00b00',
+                    timeout: 1000
+                },
+                shapeOptions: { 
+                    stroke: true,
+                    color: '#662d91',
+                    weight: 5,
+                    opacity: 2.5,
+                    fill: true,
+                    fillColor: null,
+                    fillOpacity: 0.2,
+                    clickable: true
+                },
+                metric: true,
+                zIndexOffset:2000,
+                repeatMode:false,
+                showLength: true
+            },
+            polygon:false,
+            rectangle:false,
+            circle:false,
+            marker:false
+        },
+        edit : {
+            featureGroup : geomTools,
+            edit : false,
+            remove : true
+        }
+    });
+
+    objMap._map.addControl(drawControl);
+    objMap._map.addLayer(geomTools);
+
+    objMap._map.on('draw:created', function(e) {
+        var type = e.layerType;
+        var layer = e.layer;
+        var coord = layer.toGeoJSON(); 
+        var content = getPopupContent(layer);
+
+        e.layer.bindPopup(content);
+        geomTools.addLayer(e.layer);
+
+    });
+
+
     // if(navigator.geolocation){
     //     navigator.geolocation.getCurrentPosition(coords);
     // } else {
@@ -550,4 +602,45 @@ map_change = function(){
     objMap.toLyrSET(0,lyrJson);
     $("#title_page").html(title);
     $("#title_anio_page").html(anio);
+}
+
+function getPopupContent(layer){
+
+    // Truncate value based on number of decimals
+    var _round = function(num, len) {
+        return Math.round(num*(Math.pow(10, len)))/(Math.pow(10, len));
+    };
+    // Helper method to format LatLng object (x.xxxxxx, y.yyyyyy)
+    var strLatLng = function(latlng) {
+        return "("+_round(latlng.lat, 6)+", "+_round(latlng.lng, 6)+")";
+    };
+
+    // Marker - add lat/long
+    if (layer instanceof L.Marker || layer instanceof L.CircleMarker) {
+        return strLatLng(layer.getLatLng());
+    // Circle - lat/long, radius
+    } else if (layer instanceof L.Circle) {
+        var center = layer.getLatLng(),
+            radius = layer.getRadius();
+        return "Center: "+strLatLng(center)+"<br />"
+              +"Radius: "+_round(radius, 2)+" m";
+    // Rectangle/Polygon - area
+    } else if (layer instanceof L.Polygon) {
+        var latlngs = layer._defaultShape ? layer._defaultShape() : layer.getLatLngs(),
+            area = L.GeometryUtil.geodesicArea(latlngs);
+        return "Area: "+L.GeometryUtil.readableArea(area, true);
+    // Polyline - distance
+    } else if (layer instanceof L.Polyline) {
+        var latlngs = layer._defaultShape ? layer._defaultShape() : layer.getLatLngs(),
+            distance = 0;
+        if (latlngs.length < 2) {
+            return "Distance: N/A";
+        } else {
+            for (var i = 0; i < latlngs.length-1; i++) {
+                distance += latlngs[i].distanceTo(latlngs[i+1]);
+            }
+            return "Distance: "+_round(distance, 2)+" m";
+        }
+    }
+    return null;
 }

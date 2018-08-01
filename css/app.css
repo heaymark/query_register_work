@@ -157,8 +157,8 @@ input{
 
 #dvdownload{
   position: absolute;
-  top: 42px;
-  right:42px;
+  bottom: 42px;
+  left:42px;
   z-index: 2;
 }
 
