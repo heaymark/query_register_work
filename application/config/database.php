@@ -75,14 +75,18 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	/*'hostname' => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
-	'username' => 'OWDRO',
+	/*'hostname' =>'(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
+	'username' =>'OWDRO',
+	'password' =>'OWDRO',
+	'database' =>'OWDRO',*/
+	/*'hostname' => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.14.107)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
+	'username' => 'OWDRO', 
 	'password' => 'OWDRO',
 	'database' => 'OWDRO',*/
-	'hostname' => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.14.107)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
-	'username' => 'DRO', 
-	'password' => 'DRO',
-	'database' => 'DRO-OLD',
+	'hostname'=>'(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.65.92)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=desorcl)))',
+	'username' => 'owdro',
+	'password' => 'Owdr0',
+	'database' => 'OWDRO',
 	'dbdriver' => 'oci8',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

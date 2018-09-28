@@ -40,6 +40,9 @@ var callbackMap = function(layer){
 
     objMap._map.addControl(drawControl);
     objMap._map.addLayer(geomTools);
+    // search.addTo(objMap._map);
+    refresh.addTo(objMap._map);
+    exporta.addTo(objMap._map);
 
     objMap._map.on('draw:created', function(e) {
         var type = e.layerType;
@@ -286,6 +289,8 @@ ids_change = function(evt){
 }
 
 tipo_formato = function(){
+    var tipo_formato = $("#tf").val();
+    var tipo_subformato = $("#ts").val();
     var url = $('#baseUrl').val()+'welcome/catalogo_procesos/';
     $.ajax({
         url:url,
@@ -294,7 +299,35 @@ tipo_formato = function(){
         async: false,
         success: function(res){
             $('#tipo_formato').html(res);
-            $('#subtipo_formato_select').empty();
+            if (tipo_formato != ""){
+                $('#tipo_formato').val(tipo_formato).change();
+            }
+            if (tipo_subformato != "" ){
+                $('#subtipo_formato_select').val(tipo_subformato).change();
+            }else{
+                $('#subtipo_formato_select').empty();
+            }
+        }
+    });
+}
+
+tipo_dro = function(){
+    var url = $('#baseUrl').val()+'welcome/catalogo_perfil/';
+    $.ajax({
+        url:url,
+        type: 'post',
+        dataType: 'html',
+        async: false,
+        success: function(res){
+            $('#tipo_dro').html(res);
+            /*if (tipo_formato != ""){
+                $('#tipo_formato').val(tipo_formato).change();
+            }
+            if (tipo_subformato != "" ){
+                $('#subtipo_formato_select').val(tipo_subformato).change();
+            }else{
+                $('#subtipo_formato_select').empty();
+            }*/
         }
     });
 }
@@ -386,6 +419,15 @@ tipo_subformato = function() {
                 }
             });
             break;
+        case "0":
+            $('#subtipo_formato_select').empty();
+            objMap.toLyrSQL(6,"SELECT * FROM dro_tramites");
+            getSearchTramite();
+
+            //$('#tipo_formato').empty();
+            // $('[data-modal=accion]').attr('id','btn_accion');
+            //$("#btn_accion").css("display", "none");
+            break;
         case "":
             $('#subtipo_formato_select').empty();
             objMap.toLyrSQL(6,"SELECT * FROM dro_tramites");
@@ -405,33 +447,45 @@ getSearchTramite = function (){
   var url = $('#baseUrl').val()+'welcome/gettramites/';
 
     $.ajax({
-      url:url,
-      data:data,
-      type: 'post',
-      dataType: 'text',
-      async: false,
-      success: function(res){
-        objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
-        var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre;";
-        // var sql2 = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre,tramite.fecha_insercion,tramite.id_proceso ORDER BY tramite.fecha_insercion ASC";
-        
-        $.post($("#baseUrl").val()+"welcome/gettimetramites", data, grap_htime_2,"json");
+        url:url,
+        data:data,
+        type: 'post',
+        dataType: 'text',
+        async: false,
+        success: function(res){
+            objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
+            var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre;";
+            // var sql2 = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre,tramite.fecha_insercion,tramite.id_proceso ORDER BY tramite.fecha_insercion ASC";
+            
+            // if($('input[name="grafica"]:checked').val() != "barra"){
+            var tiempo = $("#btn_graf_2").attr('option');
+            var barra = $("#btn_graf").attr('option');
 
-        var titletext = {
-            title: "Total de obras por delegacion",
-            subtitle:"",
-            xaxis: "",
-            yaxis: "",
+            if( tiempo == 'active' && barra == '' ){
+
+                $.post($("#baseUrl").val()+"welcome/gettimetramites", data, grap_htime_2,"json");
+            }else{
+
+                var titletext = {
+                    title: "Total de obras por delegacion",
+                    subtitle:"",
+                    xaxis: "",
+                    yaxis: "",
+                }
+                objMap.tosql(users,sql,graph_drill,[titletext]);
+                // objMap.tosql(users,sql2,graph_time,[titletext]);
+            }
+
+            $("#tf").val(tipo_formato);
+            $("#ts").val(tipo_subformato);
         }
-        objMap.tosql(users,sql,graph_drill,[titletext]);
-        // objMap.tosql(users,sql2,graph_time,[titletext]);
-      }
     });
 }
 
 getSearchDRO = function(){
   var numero_dro = $("#numerodedro").val();
-  var data = {ndro:numero_dro}
+  var tipo_dro = $("#tipo_dro").val();
+  var data = {ndro:numero_dro, tdro:tipo_dro}
   var url = $('#baseUrl').val()+'welcome/getdro/';
   var total = 0;
   var num_list= 1;
@@ -446,23 +500,34 @@ getSearchDRO = function(){
          $("#bdro").append("<i id=\"spinner\" class=\"fa fa-spinner fa-spin\"></i>");
       },
       success: function(res){
-        $("#spinner").remove();
-        $('#info_dro').fadeIn(2000);
-        $("#name_dro").html(res[0]["NOMBRE"]+" "+res[0]["APELLIDO_PATERNO"]+" "+res[0]["APELLIDO_MATERNO"]);
-        $("#num_dro").html(res[0]["NUMEROREGISTRO"]);
-        $("#fecha_vigencia").html("05/07/2018");
-        // console.log(res['rows'].length);5
+        var total_res = Object.keys(res).length;
+        if (total_res > 0) {
+            $("#spinner").remove();
+            $('#sn_resul').hide();
+            $('#info_dro').fadeIn(2000);
+            $("#name_dro").html(res[0]["NOMBRE"]+" "+res[0]["APELLIDO_PATERNO"]+" "+res[0]["APELLIDO_MATERNO"]);
+            $("#num_dro").html(res[0]["NUMEROREGISTRO"]);
+            $("#fecha_vigencia").html("05/07/2018");
+            // console.log(res['rows'].length);5
 
-        for (var i = 0; i < res['rows'].length; i++) {
+            for (var i = 0; i < res['rows'].length; i++) {
 
-            $("#list_tramites").append("<p>"+num_list+".-"+res[i]['DESCRIPCION']+"<b> TOTAL:</b><span>"+res[i]['SUPERFICIE']+"M</span><sup>2</sup><br><a class=\"id_ubicacion\" data-long=\""+res['rows'][i]["longitud"]+"\" data-lat=\""+res['rows'][i]["latitud"]+"\"><span class=\"text-danger glyphicon glyphicon-globe\"></span> <span class=\"text-danger\"> Centrar en el mapa</span></a></p><br>");
+                $("#list_tramites").append("<p>"+num_list+".-"+res[i]['DESCRIPCION']+" - <b> FOLIO:</b><span>"+res[i]['FOLIO']+" - <b> PERFIL:</b><span>"+res[i]['ABREVIATURA']+" - <b> TOTAL:</b><span>"+res[i]['SUPERFICIETOTAL_M2']+"M</span><sup>2</sup><br><a class=\"id_ubicacion\" data-long=\""+res['rows'][i]["longitud"]+"\" data-lat=\""+res['rows'][i]["latitud"]+"\"><span class=\"text-danger glyphicon glyphicon-globe\"></span> <span class=\"text-danger\"> Centrar en el mapa</span></a></p><br>");
 
-            total += (parseFloat(res[i]['SUPERFICIE']));
-            num_list++;
+                total += (parseFloat(res[i]['SUPERFICIETOTAL_M2']));
+                num_list++;
+            }
+
+            $("#total_metros").html(total);
+            $("#total_obra").html(res['rows'].length);
+
+        }else{
+            $("#spinner").remove();
+            $('#info_dro').hide();
+            $('#sn_resul').fadeIn(2000);
+            $('#txt_sn_resul').html('<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>  No se encontraron resultados </div>')
+
         }
-
-        $("#total_metros").html(total);
-        $("#total_obra").html(res['rows'].length);
 
       },
       error: function() {
@@ -521,10 +586,11 @@ grap_htime_2 = function(data){
     // console.log(dataCfg);
 
     graptime(dataCfg,"container");
-
 }
 
 graphtime = function(){
+    $("#btn_graf_2").attr('option', 'active');
+    $("#btn_graf").attr('option', '');
     $("#btn_graf,#btn_graf_2").hide();
     // $("#btn_graf").slideUp();//ocultar
     // $("#close_graphic,#toolsgraphics").show();
@@ -534,17 +600,17 @@ graphtime = function(){
     var tipo_subformato = $("#subtipo_formato_select").val();
     var data = {tformato:tipo_formato, tsubformato:tipo_subformato}
 
-    /*var sql = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre,tramite.fecha_insercion,tramite.id_proceso";
-    var titletext = {
-        title: "Total de obras por tiempo",
-        subtitle:"",
-        xaxis: "",
-        yaxis: "",
+    if (tipo_formato == ""){
+        /*var sql = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre,tramite.fecha_insercion,tramite.id_proceso";
+        var titletext = {
+            title: "Total de obras por tiempo",
+            subtitle:"",
+            xaxis: "",
+            yaxis: "",
+        }
+        objMap.tosql(users,sql,graph_time,[titletext]);*/
+        $.post($("#baseUrl").val()+"welcome/gettimetramites", data, grap_htime_2,"json");
     }
-    objMap.tosql(users,sql,graph_time,[titletext]);*/
-    $.post($("#baseUrl").val()+"welcome/gettimetramites", data, grap_htime_2,"json");
-
-
 }
 
 graph_drill = function(data,titletext) {
@@ -553,19 +619,25 @@ graph_drill = function(data,titletext) {
 }
 
 graph_indice = function(){
+    $("#btn_graf").attr('option', 'active');
+    $("#btn_graf_2").attr('option', '');
     $("#btn_graf,#btn_graf_2").hide();
     // $("#btn_graf").slideUp();//ocultar
     // $("#close_graphic,#toolsgraphics").show();
     $("#close_graphic,#toolsgraphics").slideDown();//mostrar
+    var tipo_formato = $("#tipo_formato").val();
+    // var tipo_subformato = $("#subtipo_formato_select").val();
 
-    var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre";
-    var titletext = {
-        title: "Total de obras por delegacion",
-        subtitle:"",
-        xaxis: "",
-        yaxis: "",
+    if (tipo_formato == ""){
+        var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre";
+        var titletext = {
+            title: "Total de obras por delegacion",
+            subtitle:"",
+            xaxis: "",
+            yaxis: "",
+        }
+        objMap.tosql(users,sql,graph_drill,[titletext]);
     }
-    objMap.tosql(users,sql,graph_drill,[titletext]);
 }
 
 graph_close = function() {
@@ -577,8 +649,8 @@ graph_close = function() {
 
 panel_close = function() {
     // $("#info_dro").fadeOut();
-    $("#info_dro").hide();
-    $("#name_dro,#num_dro,#fecha_vigencia,#list_tramites,#total_obra").html('');
+    $("#info_dro,#sn_resul").hide();
+    $("#name_dro,#num_dro,#fecha_vigencia,#list_tramites,#total_obra,#txt_sn_resul").html('');
 }
 
 map_change = function(){
@@ -643,4 +715,41 @@ function getPopupContent(layer){
         }
     }
     return null;
+}
+
+buscadores = function(){
+    var id = $('#buscador').val();
+    if(id == ""){
+        $('#message').html('Debe de seleccionar una opción').show();
+        $('#div_google,#div_predio,#div_expediente,#div_btn').hide();
+    }else if(id == 1){
+        $('#message').html('').hide();
+        $('#div_predio,#div_estatus,#div_expediente,#div_btn').hide();
+        $('#div_google').show();
+    }else if(id == 2){
+        $('#message').html('').hide();
+        $('#div_google,#div_estatus,#div_expediente').hide();
+        $('#region,#manzana,#lote').val('');
+        $('#div_predio,#div_btn').show();
+    }else if(id == 3){
+        $('#message').html('').hide();
+        $('#div_google,#div_predio,#div_btn').hide();
+        $('#div_expediente').show();
+        fnExpediente(); 
+    }
+}
+
+cierrabuscador = function(){
+    
+    $("#options,#dvdownload").hide();
+}
+
+function onKeyDecimal(e,thix) {
+        var keynum = window.event ? window.event.keyCode : e.which;
+        if (document.getElementById(thix.id).value.indexOf('.') != -1 && keynum == 46)
+            return false;
+        if ((keynum == 8 || keynum == 48 || keynum == 46))
+            return true;
+        if (keynum <= 47 || keynum >= 58) return false;
+        return /\d/.test(String.fromCharCode(keynum));
 }

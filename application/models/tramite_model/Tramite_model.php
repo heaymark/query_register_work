@@ -6,7 +6,7 @@ class Tramite_model extends CI_Model{
 	}
 
   public function get_tramites($tipoformato,$tiposubformato){
-    if($tiposubformato == "" && $tipoformato == ""){
+    if($tiposubformato == "" && $tipoformato == "0"){
       $sql = "SELECT IDPROCESO FROM PROCESO ORDER BY IDPROCESO";
     }elseif ($tiposubformato == "") {
       $sql = "SELECT IDPROCESO FROM PROCESO WHERE IDTIPOPROCESO = ".$tipoformato." ORDER BY IDPROCESO";
@@ -67,49 +67,56 @@ class Tramite_model extends CI_Model{
       return $result;
   }
 
-  public function get_dro($num_dro){
+  public function get_dro($num_dro,$tipo_dro){
+
     $sql = "SELECT
-                PROCESO_PERSONA.IDPROCESO_PERSONA,
-                USUARIO_PERSONA.IDUSUARIO,
-                USUARIO_PERSONA.IDPERSONA,
-                CAT_PERFIL.IDPERFIL,
-                CAT_PERFIL.ABREVIATURA,
-                PROCESO_PERSONA.IDPROCESO,
-                PERSONA.RFC,
+                PROCESO.IDPROCESO,
+                PROCESO.FOLIO,
+                TIPO_SUBPROCESO.DESCRIPCION,
                 PERSONA_FISICA.APELLIDO_PATERNO,
                 PERSONA_FISICA.APELLIDO_MATERNO,
                 PERSONA_FISICA.NOMBRE,
+                PROCESO_PERSONA.IDPERSONA,
+                CAT_PERFIL.ABREVIATURA,
                 DRO.NUMEROREGISTRO,
-                DRO.TIPO_DRO,
-                PROCESO.IDTIPOSUBPROCESO,
-                TIPO_SUBPROCESO.DESCRIPCION,
-                PREDIO.SUPERFICIE
+                PREDIO.SUPERFICIE,
+                OBRACARACTERISTICA.SUPERFICIETOTAL_M2
             FROM
-                PROCESO_PERSONA
-                INNER JOIN USUARIO_PERSONA ON USUARIO_PERSONA.IDUSUARIO = PROCESO_PERSONA.IDUSUARIO
-                                              AND USUARIO_PERSONA.IDPERSONA = PROCESO_PERSONA.IDPERSONA
-                INNER JOIN CAT_PERFIL ON CAT_PERFIL.IDPERFIL = USUARIO_PERSONA.IDPERFIL
-                INNER JOIN PERSONA ON PERSONA.IDPERSONA = USUARIO_PERSONA.IDPERSONA
-                INNER JOIN PERSONA_FISICA ON PERSONA.IDPERSONA = PERSONA_FISICA.IDPERSONA
-                INNER JOIN DRO ON PERSONA.IDPERSONA = DRO.IDPERSONA
-                INNER JOIN PROCESO ON PROCESO_PERSONA.IDPROCESO = PROCESO.IDPROCESO
+                PROCESO
+                INNER JOIN PROCESO_PERSONA ON PROCESO.IDPROCESO = PROCESO_PERSONA.IDPROCESO
+                INNER JOIN CAT_PERFIL ON PROCESO_PERSONA.IDPERFIL = CAT_PERFIL.IDPERFIL
+                INNER JOIN PERSONA_FISICA ON PROCESO_PERSONA.IDPERSONA = PERSONA_FISICA.IDPERSONA
+                INNER JOIN DRO ON PERSONA_FISICA.IDPERSONA = DRO.IDPERSONA
                 INNER JOIN TIPO_SUBPROCESO ON TIPO_SUBPROCESO.IDTIPOSUBPROCESO = PROCESO.IDTIPOSUBPROCESO
                 INNER JOIN PREDIO ON PROCESO.IDPROCESO = PREDIO.IDPROCESO
+                INNER JOIN OBRA ON PREDIO.IDPREDIO = OBRA.IDPREDIO
+                INNER JOIN OBRACARACTERISTICA ON OBRA.IDOBRA = OBRACARACTERISTICA.IDOBRA
             WHERE
-                DRO.NUMEROREGISTRO = ".$num_dro."";
+                DRO.NUMEROREGISTRO = ".$num_dro." AND  CAT_PERFIL.ABREVIATURA ='".$tipo_dro."'";
+
 
     $result = $this->db->query($sql)->result_array();
-    
-    $ids_procesos = "";
-    foreach ($result as $key => $value) {
-      $ids_procesos .= $value["IDPROCESO"].",";
-    }
-    $ids_procesos = trim($ids_procesos,",");
+    // print_r($result);exit();
+    $total_result = count($result);
+    if ($total_result > 0) {
 
-    $this->load->model('Carto_model/Carto_model','objCarto');
-    $rs = $this->objCarto->toSql("SELECT calle, codigo_postal, colonia, cuenta_predial, delegacion, id_proceso, latitud, longitud, num_exterior, num_interior FROM dro_tramites WHERE id_proceso IN (".$ids_procesos.")");
-    $json_rs = json_decode($rs, true);
-    $total_result = array_merge($result, $json_rs);
+      $ids_procesos = "";
+      foreach ($result as $key => $value) {
+        $ids_procesos .= $value["IDPROCESO"].",";
+      }
+      $ids_procesos = trim($ids_procesos,",");
+
+      $this->load->model('Carto_model/Carto_model','objCarto');
+      $rs = $this->objCarto->toSql("SELECT calle, codigo_postal, colonia, cuenta_predial, delegacion, id_proceso, latitud, longitud, num_exterior, num_interior FROM dro_tramites WHERE id_proceso IN (".$ids_procesos.")");
+      $json_rs = json_decode($rs, true);
+      // print_r($result);
+      // print_r($json_rs); exit();
+      $total_result = array_merge($result, $json_rs);
+    }else{
+
+      $total_result = array();
+    }
+
     return $total_result;
   }
 

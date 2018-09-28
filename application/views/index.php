@@ -111,6 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script type="text/javascript" src="scripts/route.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/global.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/functions.js"></script>
+	<script type="text/javascript" src="scripts/<?= $view ?>/controls.js"></script>
 	<script type="text/javascript" src="scripts/<?= $view ?>/events.js"></script>
 	<!-- <script type="text/javascript" src="https://www.highcharts.com/samples/data/usdeur.js"></script> -->
 </body>

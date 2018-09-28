@@ -19,6 +19,8 @@ $(function(){
 
     $('[data-tab=tramite]').on("click",tipo_formato);
 
+    $('[data-tab=dro]').on("click",tipo_dro);
+
     $("#tipo_formato").change(tipo_subformato);
 
     $("#subtipo_formato_select").change(getSearchTramite);
@@ -31,10 +33,11 @@ $(function(){
 
     $('#close_graphic').on("click",graph_close);
     
-    $('#close_panel').on("click",panel_close);
+    $('.close_panel').on("click",panel_close);
 
-    // $('#mdl').on("click",".dowload_report",download_formato);
+    $('#buscador').on('change',buscadores);
 
+    $('.close_filter').on('click',cierrabuscador);
 
     initial();
     // graph_indice();

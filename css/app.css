@@ -155,12 +155,12 @@ input{
   z-index: 2;
 }
 
-#dvdownload{
+/*#dvdownload{
   position: absolute;
   bottom: 42px;
   left:42px;
   z-index: 2;
-}
+}*/
 
 #toolsgraphics,#btn_graf{
   position: absolute;
@@ -178,7 +178,7 @@ input{
 
 #close_graphic{
   position: absolute;
-  bottom: 400px;
+  bottom: 376px;
   right:16px;
   z-index: 2;
 }
@@ -189,4 +189,18 @@ input{
 
 #list_tramites{
     height: 200px;
+}
+
+.filtering {
+  width: 320px;
+  display: block;
+  -webkit-box-shadow: 1px 1px 3px #2c3031;
+  box-shadow: 1px 1px 3px #2c3031;
+  border-radius: 7px;
+  background-color: #efefef;
+  padding: 7px;
+  top: 120px;
+  position: absolute;
+  right:43px;
+  z-index: 10;
 }

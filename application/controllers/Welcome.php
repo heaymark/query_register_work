@@ -14,6 +14,13 @@ class Welcome extends CI_Controller {
 		$this->load->view('components/selects',$data);
 	}
 
+	public function catalogo_perfil(){
+		$this->load->model('Model_selects/Model_selects','modelSelects');
+		$expediente=$this->modelSelects->catalogo_perfil();
+		$data['items']=$expediente;
+		$this->load->view('components/selects',$data);
+	}	
+
 	public function manifestacion_tipob(){
 		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_subproceso_tipoB();
@@ -73,8 +80,9 @@ class Welcome extends CI_Controller {
 
   	public function getdro(){
 		$num_dro = $_POST["ndro"];
+		$tipo_dro = $_POST["tdro"];
 		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
-		$resultado=$this->tramitemodel->get_dro($num_dro);
+		$resultado=$this->tramitemodel->get_dro($num_dro,$tipo_dro);
 
 		echo json_encode($resultado);
   	}

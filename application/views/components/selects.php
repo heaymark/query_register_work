@@ -6,7 +6,7 @@ if(isset($todos)  && $todos == 1){
 }else{
 ?>
 <option value = "">Elija una Opción</option>
-	<option value = "">Todos</option>
+	<option value = "0">Todos</option>
 <?php
 }
 ?>

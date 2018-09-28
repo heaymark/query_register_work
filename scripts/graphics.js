@@ -112,7 +112,7 @@ function graptime(objdata,div) {
 
     // console.log(usdeur);
     // console.log(objArray);
-    console.log(objdata);
+    // console.log(objdata);
 
     Highcharts.stockChart('container', {
 
