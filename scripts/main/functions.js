@@ -110,6 +110,9 @@ var callbackMap = function(layer){
 
     objMap._layers = layer;
     objMap._map.zoomControl.setPosition('topright');
+
+    $("#status_eject").attr('src', './img/map_blue.png');
+    $("#status_trami").attr('src', './img/map_dark_blue.png');
 }
 
 function initial() {
@@ -311,6 +314,23 @@ tipo_formato = function(){
     });
 }
 
+status_rmc = function(){
+    var status_rmc = $("#status_rmc").val();
+    var url = $('#baseUrl').val()+'welcome/catalogo_estados_manifestaciones/';
+    $.ajax({
+        url:url,
+        type: 'post',
+        dataType: 'html',
+        async: false,
+        success: function(res){
+            $('#estado_mc').html(res);
+            if (status_rmc != ""){
+                $('#estado_mc').val(status_rmc).change();
+            }
+        }
+    });
+}
+
 tipo_dro = function(){
     var url = $('#baseUrl').val()+'welcome/catalogo_perfil/';
     $.ajax({
@@ -478,6 +498,42 @@ getSearchTramite = function (){
 
             $("#tf").val(tipo_formato);
             $("#ts").val(tipo_subformato);
+        }
+    });
+}
+
+getStatusTramite = function (){
+  var estado_mc = $("#estado_mc").val();
+  var data = {status_mc:estado_mc}
+  var url = $('#baseUrl').val()+'welcome/getstatustramites/';
+
+    $.ajax({
+        url:url,
+        data:data,
+        type: 'post',
+        dataType: 'text',
+        async: false,
+        success: function(res){
+            objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
+            $("#status_rmc").val(estado_mc);
+        }
+    });
+}
+
+getStatusTramite_1 = function (){
+  var estado_mc = $("#estado_mc_1").val();
+  var data = {status_mc_1:estado_mc}
+  var url = $('#baseUrl').val()+'welcome/getstatustramites_1/';
+
+    $.ajax({
+        url:url,
+        data:data,
+        type: 'post',
+        dataType: 'text',
+        async: false,
+        success: function(res){
+            objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
+            $("#status_rmc").val(estado_mc);
         }
     });
 }

@@ -8,6 +8,7 @@
             <li class="active"><a data-toggle="tab" data-tab="ubicacion" href="#ubica">Ubicación</a></li>
             <li><a data-toggle="tab" data-tab="tramite" href="#tramite">Tramite</a></li> <!-- nombre de la tab -->
             <li><a data-toggle="tab" data-tab="dro" href="#dro">DRO</a></li> <!-- nombre de la tab -->
+            <li><a data-toggle="tab" data-tab="status" href="#status">Estatus</a></li> <!-- nombre de la tab -->
           </ul>
           <div class="tab-content">
             <!-- informacion del direccion -->
@@ -132,6 +133,30 @@
                 </div>
               </div>  
             </div>
+
+            <div id="status" class="tab-pane">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <span class="col-xs-12">
+                    <div class="form-group">
+                      <label>Estado Actual:</label>
+                      <!-- <select id="estado_mc" name="estado_mc" class="form-control" style="width:100%;" required >
+                        <option value="">Seleccionar</option>
+                      </select> -->
+                      <select id="estado_mc_1" name="estado_mc_1" class="form-control" style="width:100%;" required >
+                        <option value="">Seleccionar</option>
+                        <option value="0">Todos</option> 
+                        <option value="1234">Obra en proceso</option>
+                        <option value="5">Obra en ejecucion</option>
+                        <option value="6">Obra en prorroga</option>
+                        <option value="7">Obra en terminacion</option>
+                      </select>
+                      <input type="hidden" name="status_rmc" id="status_rmc" value="">
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div><!-- Fin tabs -->
         </div>
         <!-- Download kml,csv  -->
@@ -189,24 +214,24 @@
     <button type="button" id="" class="pull-right close_filter" style="border-radius: 3px;">×</button>
     <br />
     <div class="form-group">
-          <br />
-            <label for="buscador">Busquerda por:</label>
-            <select id="buscador" class="form-control" style="width: 100%">
-              <option value="">Seleccione una opcion</option>
-              <option value="1">Dirección</option>
-              <option value="2">Cuenta Predial</option>
-              <!-- <option value="3">Expediente</option> -->
-              <!-- <option value="4">DRO</option> -->
-            </select>
-        </div>
+      <br />
+      <label for="buscador">Busquerda por:</label>
+      <select id="buscador" class="form-control" style="width: 100%">
+        <option value="">Seleccione una opcion</option>
+        <option value="1">Dirección</option>
+        <option value="2">Cuenta Predial</option>
+        <!-- <option value="3">Expediente</option> -->
+        <!-- <option value="4">DRO</option> -->
+      </select>
+    </div>
 
-        <div class="form-group" id="div_google" style="display: none">
-            <label for="txtDireccion">Dirección:</label>
-            <input id="txtDireccion" name="txtDireccion" placeholder="calle, numero, colonia" class="form-control text-uppercase input-sm" autocomplete="off" type="text">
-        </div>
+    <div class="form-group" id="div_google" style="display: none">
+        <label for="txtDireccion">Dirección:</label>
+        <input id="txtDireccion" name="txtDireccion" placeholder="calle, numero, colonia" class="form-control text-uppercase input-sm" autocomplete="off" type="text">
+    </div>
 
-        <div class="row" id="div_predio" style="display: none">
-          <br />
+    <div class="row" id="div_predio" style="display: none">
+      <br />
       <div class="col-md-4 col-sm-4 col-xs-4">
         <div class="form-group">
           <label class="sr-only" for="region">Región:</label>
@@ -249,8 +274,14 @@
       </center>
     </div>
         <center><br /><p id="message" style="color:red; display: none"></p></center>
-
   </div>
+</div>
+
+<div class='cartodb-legend category' style="left:42px; right:initial;">
+  <div class="legend-title" style="color:#284a59">Manifestación Const. </div>
+    <li class="fa"><img id="status_eject" alt="Smiley face" height="20" width="20"></li>&nbsp;Tipo B <!-- En ejecución -->
+    <br>
+    <li class="fa"><img id="status_trami" alt="Smiley face" height="20" width="20"></li>&nbsp;Tipo C <!-- En tramite -->
 </div>
 
 <div id="googlemap" style="width:300px;heigth:400px;"></div>

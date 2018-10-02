@@ -3,6 +3,10 @@ if(isset($todos)  && $todos == 1){
 ?>
 <option value = "0">TODOS</option>
 <?php
+}else if(isset($perfil) && $perfil == 1){
+?>
+<option value = "">Elija una Opción</option>
+<?php
 }else{
 ?>
 <option value = "">Elija una Opción</option>

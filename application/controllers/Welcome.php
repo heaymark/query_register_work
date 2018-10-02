@@ -18,8 +18,16 @@ class Welcome extends CI_Controller {
 		$this->load->model('Model_selects/Model_selects','modelSelects');
 		$expediente=$this->modelSelects->catalogo_perfil();
 		$data['items']=$expediente;
+		$data['perfil']= 1;
 		$this->load->view('components/selects',$data);
-	}	
+	}
+
+	public function catalogo_estados_manifestaciones(){
+		$this->load->model('Model_selects/Model_selects','modelSelects');
+		$expediente=$this->modelSelects->catalogo_estados_manifestaciones();
+		$data['items']=$expediente;
+		$this->load->view('components/selects',$data);
+	}
 
 	public function manifestacion_tipob(){
 		$this->load->model('Model_selects/Model_selects','modelSelects');
@@ -76,6 +84,30 @@ class Welcome extends CI_Controller {
 		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
 		$expediente=$this->tramitemodel->get_time_tramites($tipoformato,$tiposubformato);
 		echo json_encode($expediente);
+  	}
+
+  	public function getstatustramites(){
+		$status_mc = $_POST["status_mc"];
+		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
+		$expediente=$this->tramitemodel->get_status_tramites($status_mc);
+		$ids_tramites = "";
+		foreach ($expediente as $key => $value) {
+			$ids_tramites .= $value["IDPROCESO"].",";
+		}
+		$ids_tramites = trim($ids_tramites,",");
+		echo $ids_tramites;
+  	}
+
+  	public function getstatustramites_1(){
+		$status_mc = $_POST["status_mc_1"];
+		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
+		$expediente=$this->tramitemodel->get_status_tramites($status_mc);
+		$ids_tramites = "";
+		foreach ($expediente as $key => $value) {
+			$ids_tramites .= $value["IDPROCESO"].",";
+		}
+		$ids_tramites = trim($ids_tramites,",");
+		echo $ids_tramites;
   	}
 
   	public function getdro(){

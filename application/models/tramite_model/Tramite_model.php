@@ -17,6 +17,87 @@ class Tramite_model extends CI_Model{
      	return $result;
   }
 
+  public function get_status_tramites($status_mc){
+    // print_r($status_mc);
+    if($status_mc == "0" || $status_mc == ""){
+      $sql = "SELECT
+                  PROCESO.IDPROCESO,
+                  PROCESO.FOLIO,
+                  COUNT(CAT_FASE.IDFASE) AS  ID_FASE,
+                  CASE COUNT(CAT_FASE.IDFASE)
+                    WHEN 1 THEN 'Captura Datos Predio/Obra'
+                    WHEN 2 THEN 'Aceptacion Participantes'
+                    WHEN 3 THEN 'Firma Participantes'
+                    WHEN 4 THEN 'Carga Firma Autografa'
+                    WHEN 5 THEN 'Obra en ejecucion'
+                    WHEN 6 THEN 'Prorroga'
+                    WHEN 7 THEN 'Terminacion de obra'
+                    ELSE 'SIN ESTADO'
+                    END AS DESCRIPCION
+              FROM
+                  CAT_FASE
+                  INNER JOIN FASE_PROCESO ON CAT_FASE.IDFASE = FASE_PROCESO.IDFASE
+                  INNER JOIN PROCESO ON PROCESO.IDPROCESO = FASE_PROCESO.IDPROCESO
+              GROUP BY PROCESO.IDPROCESO,PROCESO.FOLIO
+              ORDER BY  PROCESO.IDPROCESO ASC";
+    }else if($status_mc == '1234'){
+      $sql = "WITH OBRAS_ESTADO AS ( SELECT
+                  PROCESO.IDPROCESO,
+                  PROCESO.FOLIO,
+                  COUNT(CAT_FASE.IDFASE) AS  ID_FASE,
+                  CASE COUNT(CAT_FASE.IDFASE)
+                    WHEN 1 THEN 'Captura Datos Predio/Obra'
+                    WHEN 2 THEN 'Aceptacion Participantes'
+                    WHEN 3 THEN 'Firma Participantes'
+                    WHEN 4 THEN 'Carga Firma Autografa'
+                    WHEN 5 THEN 'Obra en ejecucion'
+                    WHEN 6 THEN 'Prorroga'
+                    WHEN 7 THEN 'Terminacion de obra'
+                    ELSE 'SIN ESTADO'
+                    END AS DESCRIPCION
+              FROM
+                  CAT_FASE
+                  INNER JOIN FASE_PROCESO ON CAT_FASE.IDFASE = FASE_PROCESO.IDFASE
+                  INNER JOIN PROCESO ON PROCESO.IDPROCESO = FASE_PROCESO.IDPROCESO
+              GROUP BY PROCESO.IDPROCESO,PROCESO.FOLIO
+              ORDER BY  PROCESO.IDPROCESO ASC)
+              SELECT  IDPROCESO, FOLIO, ID_FASE, DESCRIPCION 
+              FROM OBRAS_ESTADO
+              WHERE ID_FASE IN (1,2,3,4)";
+
+    }else{
+
+      $sql = "WITH OBRAS_ESTADO AS ( SELECT
+                  PROCESO.IDPROCESO,
+                  PROCESO.FOLIO,
+                  COUNT(CAT_FASE.IDFASE) AS  ID_FASE,
+                  CASE COUNT(CAT_FASE.IDFASE)
+                    WHEN 1 THEN 'Captura Datos Predio/Obra'
+                    WHEN 2 THEN 'Aceptacion Participantes'
+                    WHEN 3 THEN 'Firma Participantes'
+                    WHEN 4 THEN 'Carga Firma Autografa'
+                    WHEN 5 THEN 'Obra en ejecucion'
+                    WHEN 6 THEN 'Prorroga'
+                    WHEN 7 THEN 'Terminacion de obra'
+                    ELSE 'SIN ESTADO'
+                    END AS DESCRIPCION
+              FROM
+                  CAT_FASE
+                  INNER JOIN FASE_PROCESO ON CAT_FASE.IDFASE = FASE_PROCESO.IDFASE
+                  INNER JOIN PROCESO ON PROCESO.IDPROCESO = FASE_PROCESO.IDPROCESO
+              GROUP BY PROCESO.IDPROCESO,PROCESO.FOLIO
+              ORDER BY  PROCESO.IDPROCESO ASC)
+              SELECT  IDPROCESO, FOLIO, ID_FASE, DESCRIPCION 
+              FROM OBRAS_ESTADO
+              WHERE ID_FASE = ".$status_mc."";
+    }
+    // print_r($sql);
+    $result = $this->db->query($sql)->result_array();
+    // print_r($result); exit();
+      return $result;
+  }
+
+
   public function get_time_tramites($tipoformato,$tiposubformato){
     if($tiposubformato == "" && $tipoformato == ""){
       $sql = "SELECT

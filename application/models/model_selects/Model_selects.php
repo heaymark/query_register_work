@@ -12,8 +12,26 @@ class Model_selects extends CI_Model{
      	return $result;		
 	}
 
+	public  function catalogo_estados_manifestaciones(){
+		$sql = "SELECT IDFASE AS ID, DESC_FASE AS TEXT FROM CAT_FASE WHERE IDFASE NOT IN(8) ORDER BY IDFASE ASC";
+		/*$sql = "SELECT IDFASE AS ID, 
+				CASE (IDFASE)
+				WHEN 1 THEN 'Obra en proceso'
+				WHEN 2 THEN 'Obra en proceso'
+				WHEN 3 THEN 'Obra en proceso'
+				WHEN 4 THEN 'Obra en proceso'
+				WHEN 5 THEN 'Obra en ejecucion'
+				WHEN 6 THEN 'Prorroga'
+				WHEN 7 THEN 'Terminacion de obra'
+				ELSE 'SIN ESTADO'
+				FROM CAT_FASE 
+				WHERE IDFASE NOT IN(8) ORDER BY IDFASE ASC";*/
+		$result = $this->db->query($sql)->result_array();
+     	return $result;		
+	}
+
 	public  function catalogo_perfil(){
-		$sql = "SELECT ABREVIATURA AS ID, DESC_PERFIL AS TEXT FROM CAT_PERFIL ORDER BY IDPERFIL ASC";
+		$sql = "SELECT ABREVIATURA AS ID, DESC_PERFIL AS TEXT FROM CAT_PERFIL WHERE IDPERFIL NOT IN(1,2,99) ORDER BY IDPERFIL ASC";
 		$result = $this->db->query($sql)->result_array();
      	return $result;		
 	}

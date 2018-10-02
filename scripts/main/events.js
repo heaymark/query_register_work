@@ -21,6 +21,12 @@ $(function(){
 
     $('[data-tab=dro]').on("click",tipo_dro);
 
+    $('[data-tab=status]').on("click",status_rmc);
+
+    $("#estado_mc").change(getStatusTramite); //Anterior
+    
+    $("#estado_mc_1").change(getStatusTramite_1);
+
     $("#tipo_formato").change(tipo_subformato);
 
     $("#subtipo_formato_select").change(getSearchTramite);
