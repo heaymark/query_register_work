@@ -156,6 +156,9 @@
                   </span>
                 </div>
               </div>
+
+              <!-- Panel -->
+              <!-- Fin Panel -->
             </div>
           </div><!-- Fin tabs -->
         </div>

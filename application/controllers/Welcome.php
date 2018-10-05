@@ -69,12 +69,18 @@ class Welcome extends CI_Controller {
   		$tiposubformato = $_POST["tsubformato"];
 		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
 		$expediente=$this->tramitemodel->get_tramites($tipoformato,$tiposubformato);
-		$ids_tramites = "";
-		foreach ($expediente as $key => $value) {
-			$ids_tramites .= $value["IDPROCESO"].",";
+		$total_expediente = count($expediente);
+		if ($total_expediente > 0) {
+			$ids_tramites = "";
+			foreach ($expediente as $key => $value) {
+				$ids_tramites .= $value["IDPROCESO"].",";
+			}
+			$ids_tramites = trim($ids_tramites,",");
+			echo $ids_tramites;
+		}else{
+			$ids_tramites = 0;
+			echo $ids_tramites;
 		}
-		$ids_tramites = trim($ids_tramites,",");
-		echo $ids_tramites;
   	}
 
   	public function gettimetramites(){
@@ -126,5 +132,11 @@ class Welcome extends CI_Controller {
 		$resultado=$this->tramitemodel->info_direccion($num_proceso);
 
 		echo json_encode($resultado[0]);
+  	}
+
+  	public function getTotalEstado(){
+		$this->load->model('Tramite_model/Tramite_model','tramitemodel');
+		$resultado=$this->tramitemodel->info_total_estado();
+		echo json_encode($resultado);
   	}
 }

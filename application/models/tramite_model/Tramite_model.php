@@ -6,11 +6,19 @@ class Tramite_model extends CI_Model{
 	}
 
   public function get_tramites($tipoformato,$tiposubformato){
-    if($tiposubformato == "" && $tipoformato == "0"){
+    if($tipoformato == 0 || $tipoformato == ""){
+
       $sql = "SELECT IDPROCESO FROM PROCESO ORDER BY IDPROCESO";
-    }elseif ($tiposubformato == "") {
+    }elseif ($tipoformato > 0 &&  $tiposubformato == "") {
+
       $sql = "SELECT IDPROCESO FROM PROCESO WHERE IDTIPOPROCESO = ".$tipoformato." ORDER BY IDPROCESO";
-    }else{
+    }elseif ($tipoformato == 1 &&  $tiposubformato == 0){
+
+      $sql = "SELECT IDPROCESO FROM PROCESO WHERE IDTIPOPROCESO = ".$tipoformato." AND IDTIPOSUBPROCESO IN(1,2,3,4) ORDER BY IDPROCESO";
+    }elseif ($tipoformato == 2 &&  $tiposubformato == 0){
+
+      $sql = "SELECT IDPROCESO FROM PROCESO WHERE IDTIPOPROCESO = ".$tipoformato." AND IDTIPOSUBPROCESO IN(7,8,9,10) ORDER BY IDPROCESO";
+    }elseif ($tipoformato > 0 &&  $tiposubformato > 0){
       $sql = "SELECT IDPROCESO FROM PROCESO WHERE IDTIPOPROCESO = ".$tipoformato." AND IDTIPOSUBPROCESO = ".$tiposubformato." ORDER BY IDPROCESO";
     }
     $result = $this->db->query($sql)->result_array();
@@ -99,7 +107,8 @@ class Tramite_model extends CI_Model{
 
 
   public function get_time_tramites($tipoformato,$tiposubformato){
-    if($tiposubformato == "" && $tipoformato == ""){
+
+    if($tipoformato == "" || $tipoformato == 0){
       $sql = "SELECT
                   COUNT(*) AS TOTAL,
                   TIPO_SUBPROCESO.DESCRIPCION AS SUBPROCESO,
@@ -113,7 +122,9 @@ class Tramite_model extends CI_Model{
                   INNER JOIN TIPO_PROCESO ON TIPO_PROCESO.IDTIPOPROCESO = PROCESO.IDTIPOPROCESO
               GROUP BY TIPO_SUBPROCESO.DESCRIPCION, EXTRACT(YEAR FROM PROCESO.FECHACREACION), EXTRACT(MONTH FROM PROCESO.FECHACREACION), EXTRACT(DAY FROM PROCESO.FECHACREACION), TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')
               ORDER BY TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')";
-    }elseif ($tiposubformato == "") {
+
+    }elseif ($tipoformato > 0 &&  $tiposubformato == "") {
+
       $sql = "SELECT
                   COUNT(*) AS TOTAL,
                   TIPO_SUBPROCESO.DESCRIPCION AS SUBPROCESO,
@@ -128,7 +139,40 @@ class Tramite_model extends CI_Model{
               WHERE TIPO_PROCESO.IDTIPOPROCESO = ".$tipoformato."
               GROUP BY TIPO_SUBPROCESO.DESCRIPCION, EXTRACT(YEAR FROM PROCESO.FECHACREACION), EXTRACT(MONTH FROM PROCESO.FECHACREACION), EXTRACT(DAY FROM PROCESO.FECHACREACION), TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')
               ORDER BY TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')";
-    }else{
+    }elseif ($tipoformato == 1 &&  $tiposubformato == 0){
+    
+      $sql = "SELECT
+                  COUNT(*) AS TOTAL,
+                  TIPO_SUBPROCESO.DESCRIPCION AS SUBPROCESO,
+                  EXTRACT(YEAR FROM PROCESO.FECHACREACION) AS ANIO,
+                  EXTRACT(MONTH FROM PROCESO.FECHACREACION) AS MES,
+                  EXTRACT(DAY FROM PROCESO.FECHACREACION) AS DIA,
+                  TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY') AS FECHA
+              FROM
+                  PROCESO
+                  INNER JOIN TIPO_SUBPROCESO ON TIPO_SUBPROCESO.IDTIPOSUBPROCESO = PROCESO.IDTIPOSUBPROCESO
+                  INNER JOIN TIPO_PROCESO ON TIPO_PROCESO.IDTIPOPROCESO = PROCESO.IDTIPOPROCESO
+              WHERE TIPO_PROCESO.IDTIPOPROCESO = ".$tipoformato." AND TIPO_SUBPROCESO.IDTIPOSUBPROCESO IN(1,2,3,4)
+              GROUP BY TIPO_SUBPROCESO.DESCRIPCION, EXTRACT(YEAR FROM PROCESO.FECHACREACION), EXTRACT(MONTH FROM PROCESO.FECHACREACION), EXTRACT(DAY FROM PROCESO.FECHACREACION), TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')
+              ORDER BY TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')";
+    }elseif ($tipoformato == 2 &&  $tiposubformato == 0){
+
+      $sql = "SELECT
+                  COUNT(*) AS TOTAL,
+                  TIPO_SUBPROCESO.DESCRIPCION AS SUBPROCESO,
+                  EXTRACT(YEAR FROM PROCESO.FECHACREACION) AS ANIO,
+                  EXTRACT(MONTH FROM PROCESO.FECHACREACION) AS MES,
+                  EXTRACT(DAY FROM PROCESO.FECHACREACION) AS DIA,
+                  TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY') AS FECHA
+              FROM
+                  PROCESO
+                  INNER JOIN TIPO_SUBPROCESO ON TIPO_SUBPROCESO.IDTIPOSUBPROCESO = PROCESO.IDTIPOSUBPROCESO
+                  INNER JOIN TIPO_PROCESO ON TIPO_PROCESO.IDTIPOPROCESO = PROCESO.IDTIPOPROCESO
+              WHERE TIPO_PROCESO.IDTIPOPROCESO = ".$tipoformato." AND TIPO_SUBPROCESO.IDTIPOSUBPROCESO IN(7,8,9,10)
+              GROUP BY TIPO_SUBPROCESO.DESCRIPCION, EXTRACT(YEAR FROM PROCESO.FECHACREACION), EXTRACT(MONTH FROM PROCESO.FECHACREACION), EXTRACT(DAY FROM PROCESO.FECHACREACION), TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')
+              ORDER BY TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')";
+    }elseif ($tipoformato > 0 &&  $tiposubformato > 0){
+
       $sql = "SELECT
                   COUNT(*) AS TOTAL,
                   TIPO_SUBPROCESO.DESCRIPCION AS SUBPROCESO,
@@ -144,6 +188,7 @@ class Tramite_model extends CI_Model{
               GROUP BY TIPO_SUBPROCESO.DESCRIPCION, EXTRACT(YEAR FROM PROCESO.FECHACREACION), EXTRACT(MONTH FROM PROCESO.FECHACREACION), EXTRACT(DAY FROM PROCESO.FECHACREACION), TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')
               ORDER BY TO_CHAR(PROCESO.FECHACREACION,'DD/MM/YYYY')";
     }
+
     $result = $this->db->query($sql)->result_array();
       return $result;
   }
@@ -353,6 +398,24 @@ class Tramite_model extends CI_Model{
         $result1 = $this->db->query($sql);
 
         return $result1;
+  }
+
+  public function info_total_estado(){
+    $sql = "SELECT ESTADO,COUNT(*) AS TOTAL FROM (
+              SELECT F.IDPROCESO, CASE MAX(F.IDFASE)
+                  WHEN  1  THEN 'Obra en proceso'
+                  WHEN 2  THEN 'Obra en proceso'
+                  WHEN 3  THEN 'Obra en proceso'
+                  WHEN 4 THEN 'Obra en proceso'
+                  WHEN 5 THEN 'Obra en ejecucion'
+                  WHEN  6 THEN 'Prorroga'
+                  WHEN  7 THEN 'Terminacion de obra'
+                  ELSE 'SIN ESTADO'
+                  END AS ESTADO FROM FASE_PROCESO  F INNER JOIN CAT_FASE C
+              ON F.IDFASE = C.IDFASE GROUP BY F.IDPROCESO )  ESTAD 
+              GROUP BY ESTADO";
+    $result = $this->db->query($sql)->result_array();
+    return $result;
   }
 
 }

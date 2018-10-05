@@ -38,11 +38,11 @@ var callbackMap = function(layer){
         }
     });
 
-    objMap._map.addControl(drawControl);
-    objMap._map.addLayer(geomTools);
-    // search.addTo(objMap._map);
-    refresh.addTo(objMap._map);
-    exporta.addTo(objMap._map);
+    // objMap._map.addControl(drawControl); //Linea de medicion
+    // objMap._map.addLayer(geomTools); //Linea de medicion
+    // search.addTo(objMap._map); //Busqueda
+    refresh.addTo(objMap._map); 
+    // exporta.addTo(objMap._map); //Exportar dataset
 
     objMap._map.on('draw:created', function(e) {
         var type = e.layerType;
@@ -317,6 +317,7 @@ tipo_formato = function(){
 status_rmc = function(){
     var status_rmc = $("#status_rmc").val();
     var url = $('#baseUrl').val()+'welcome/catalogo_estados_manifestaciones/';
+    $("#total_obras").remove();
     $.ajax({
         url:url,
         type: 'post',
@@ -327,8 +328,50 @@ status_rmc = function(){
             if (status_rmc != ""){
                 $('#estado_mc').val(status_rmc).change();
             }
+            $.post($("#baseUrl").val()+"welcome/getTotalEstado", contador_estado,"json");
         }
     });
+}
+
+contador_estado = function(data){
+    var total_obras = parseInt(data[0].TOTAL)+parseInt(data[1].TOTAL)+parseInt(data[2].TOTAL)+parseInt(data[3].TOTAL);
+    $('<div id="total_obras" class="panel panel-default" >'+
+                '<div class="panel-heading">'+
+                  '<div class="row">'+
+                    '<div class="col-sm-10 col-md-10"><h4>Totales por estaus</h4> </div>'+
+                  '</div>'+
+                '</div>'+
+                '<div class="panel-body">'+
+                  '<div id="txt_total_obra">'+
+                    '<div class="table-responsive">'+
+                      '<table class="table table-hover">'+
+                        '<tbody>'+
+                          '<tr>'+
+                            '<td class="success">'+data[0].ESTADO+'</td>'+
+                            '<td class="success"><span class="label label-success">'+data[0].TOTAL+'</span></td>'+
+                          '</tr>'+
+                          '<tr>'+
+                            '<td class="info">'+data[1].ESTADO+'</td>'+
+                            '<td class="info"><span class="label label-info">'+data[1].TOTAL+'</span></td>'+
+                          '</tr>'+
+                          '<tr>'+
+                            '<td class="warning">'+data[2].ESTADO+'</td>'+
+                            '<td class="warning"><span class="label label-warning">'+data[2].TOTAL+'</span></td>'+
+                          '</tr>'+
+                          '<tr>'+
+                            '<td class="danger">'+data[3].ESTADO+'</td>'+
+                            '<td class="danger"><span class="label label-danger">'+data[3].TOTAL+'</span></td>'+
+                          '</tr>'+
+                          '<tr>'+
+                            '<td class="active">Total de obras</td>'+
+                            '<td class="active"><span class="label label-primary">'+total_obras+'</span></td>'+
+                          '</tr>'+
+                        '</tbody>'+
+                      '</table>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>'+
+              '</div>').appendTo("#status");
 }
 
 tipo_dro = function(){
@@ -473,9 +516,17 @@ getSearchTramite = function (){
         dataType: 'text',
         async: false,
         success: function(res){
+
             objMap.toLyrSQL(6,"SELECT * FROM dro_tramites WHERE id_proceso IN ("+res+");");
-            var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre;";
-            // var sql2 = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre,tramite.fecha_insercion,tramite.id_proceso ORDER BY tramite.fecha_insercion ASC";
+            
+            if(res != 0){
+                var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre;";
+                // var sql2 = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) WHERE tramite.id_proceso IN ("+res+") group by del.nombre,tramite.fecha_insercion,tramite.id_proceso ORDER BY tramite.fecha_insercion ASC";
+
+            }else{
+                var sql = "SELECT 0 as total, '' as categories,'obras' as series FROM develop.dro_tramites tramite LIMIT 1";
+
+            }
             
             // if($('input[name="grafica"]:checked').val() != "barra"){
             var tiempo = $("#btn_graf_2").attr('option');
@@ -656,7 +707,7 @@ graphtime = function(){
     var tipo_subformato = $("#subtipo_formato_select").val();
     var data = {tformato:tipo_formato, tsubformato:tipo_subformato}
 
-    if (tipo_formato == ""){
+    if (tipo_formato == "" || tipo_formato == 0){
         /*var sql = "SELECT del.nombre as delegacion,'obras' as series, tramite.fecha_insercion, EXTRACT(YEAR FROM tramite.fecha_insercion) AS anio, EXTRACT(MONTH FROM tramite.fecha_insercion) AS mes,  EXTRACT(DAY FROM tramite.fecha_insercion) AS dia, tramite.id_proceso FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre,tramite.fecha_insercion,tramite.id_proceso";
         var titletext = {
             title: "Total de obras por tiempo",
@@ -666,6 +717,9 @@ graphtime = function(){
         }
         objMap.tosql(users,sql,graph_time,[titletext]);*/
         $.post($("#baseUrl").val()+"welcome/gettimetramites", data, grap_htime_2,"json");
+    }else{
+
+        getSearchTramite();
     }
 }
 
@@ -684,7 +738,7 @@ graph_indice = function(){
     var tipo_formato = $("#tipo_formato").val();
     // var tipo_subformato = $("#subtipo_formato_select").val();
 
-    if (tipo_formato == ""){
+    if (tipo_formato == "" || tipo_formato == 0){
         var sql = "SELECT count(tramite.delegacion) as total,del.nombre as categories,'obras' as series FROM develop.dro_tramites tramite INNER JOIN develop.basedel del ON ST_Contains(del.the_geom,tramite.the_geom) OR ST_Intersects(del.the_geom,tramite.the_geom) group by del.nombre";
         var titletext = {
             title: "Total de obras por delegacion",
@@ -693,11 +747,17 @@ graph_indice = function(){
             yaxis: "",
         }
         objMap.tosql(users,sql,graph_drill,[titletext]);
+    }else{
+
+        getSearchTramite();
     }
+
 }
 
 graph_close = function() {
     $("#close_graphic,#toolsgraphics").hide();    
+    $("#btn_graf").attr('option', '');
+    $("#btn_graf_2").attr('option', '');
     // $("#close_graphic,#toolsgraphics").slideUp();//mostrar
     // $("#btn_graf").show();,
     $("#btn_graf,#btn_graf_2").slideDown();//ocultar
