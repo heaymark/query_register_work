@@ -338,7 +338,7 @@ contador_estado = function(data){
     $('<div id="total_obras" class="panel panel-default" >'+
                 '<div class="panel-heading">'+
                   '<div class="row">'+
-                    '<div class="col-sm-10 col-md-10"><h4>Totales por estaus</h4> </div>'+
+                    '<div class="col-sm-10 col-md-10"><h4>Totales por estado</h4> </div>'+
                   '</div>'+
                 '</div>'+
                 '<div class="panel-body">'+
@@ -347,24 +347,24 @@ contador_estado = function(data){
                       '<table class="table table-hover">'+
                         '<tbody>'+
                           '<tr>'+
-                            '<td class="success">'+data[0].ESTADO+'</td>'+
-                            '<td class="success"><span class="label label-success">'+data[0].TOTAL+'</span></td>'+
+                            '<td class="active">'+data[0].ESTADO+'</td>'+
+                            '<td class="active text-center">'+data[0].TOTAL+'</td>'+
                           '</tr>'+
                           '<tr>'+
-                            '<td class="info">'+data[1].ESTADO+'</td>'+
-                            '<td class="info"><span class="label label-info">'+data[1].TOTAL+'</span></td>'+
+                            '<td class="active">'+data[1].ESTADO+'</td>'+
+                            '<td class="active text-center">'+data[1].TOTAL+'</td>'+
                           '</tr>'+
                           '<tr>'+
-                            '<td class="warning">'+data[2].ESTADO+'</td>'+
-                            '<td class="warning"><span class="label label-warning">'+data[2].TOTAL+'</span></td>'+
+                            '<td class="active">'+data[2].ESTADO+'</td>'+
+                            '<td class="active text-center">'+data[2].TOTAL+'</td>'+
                           '</tr>'+
                           '<tr>'+
-                            '<td class="danger">'+data[3].ESTADO+'</td>'+
-                            '<td class="danger"><span class="label label-danger">'+data[3].TOTAL+'</span></td>'+
+                            '<td class="active">'+data[3].ESTADO+'</td>'+
+                            '<td class="active text-center">'+data[3].TOTAL+'</td>'+
                           '</tr>'+
                           '<tr>'+
                             '<td class="active">Total de obras</td>'+
-                            '<td class="active"><span class="label label-primary">'+total_obras+'</span></td>'+
+                            '<td class="active text-center">'+total_obras+'</td>'+
                           '</tr>'+
                         '</tbody>'+
                       '</table>'+
@@ -639,7 +639,7 @@ getSearchDRO = function(){
       },
       error: function() {
         $("#spinner").remove();
-        alert("OPPS! Ocurrio un error! falta ID");
+        alert("OPPS! Ocurrio un error! falta Numero de registro");
       }
 
 

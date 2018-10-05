@@ -8,7 +8,7 @@
             <li class="active"><a data-toggle="tab" data-tab="ubicacion" href="#ubica">Ubicación</a></li>
             <li><a data-toggle="tab" data-tab="tramite" href="#tramite">Tramite</a></li> <!-- nombre de la tab -->
             <li><a data-toggle="tab" data-tab="dro" href="#dro">DRO</a></li> <!-- nombre de la tab -->
-            <li><a data-toggle="tab" data-tab="status" href="#status">Estatus</a></li> <!-- nombre de la tab -->
+            <li><a data-toggle="tab" data-tab="status" href="#status">Estado</a></li> <!-- nombre de la tab -->
           </ul>
           <div class="tab-content">
             <!-- informacion del direccion -->

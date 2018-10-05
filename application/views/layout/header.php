@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#"><img alt="DRO2" src="./img/logo.png"></a>
+        <a class="navbar-brand" href="#"><img alt="Consulta RMC" src="./img/logo.png"></a>
       </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
