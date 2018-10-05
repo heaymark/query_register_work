@@ -596,6 +596,7 @@ getSearchDRO = function(){
   var url = $('#baseUrl').val()+'welcome/getdro/';
   var total = 0;
   var num_list= 1;
+  var multiplica,divide;
 
     $.ajax({
       url:url,
@@ -612,18 +613,24 @@ getSearchDRO = function(){
             $("#spinner").remove();
             $('#sn_resul').hide();
             $('#info_dro').fadeIn(2000);
-            $("#name_dro").html(res[0]["NOMBRE"]+" "+res[0]["APELLIDO_PATERNO"]+" "+res[0]["APELLIDO_MATERNO"]);
+            $("#name_dro").html(res[0]['ABREVIATURA']+": "+res[0]["NOMBRE"]+" "+res[0]["APELLIDO_PATERNO"]+" "+res[0]["APELLIDO_MATERNO"]);
             $("#num_dro").html(res[0]["NUMEROREGISTRO"]);
             $("#fecha_vigencia").html("05/07/2018");
             // console.log(res['rows'].length);5
 
             for (var i = 0; i < res['rows'].length; i++) {
 
-                $("#list_tramites").append("<p>"+num_list+".-"+res[i]['DESCRIPCION']+" - <b> FOLIO:</b><span>"+res[i]['FOLIO']+" - <b> PERFIL:</b><span>"+res[i]['ABREVIATURA']+" - <b> TOTAL:</b><span>"+res[i]['SUPERFICIETOTAL_M2']+"M</span><sup>2</sup><br><a class=\"id_ubicacion\" data-long=\""+res['rows'][i]["longitud"]+"\" data-lat=\""+res['rows'][i]["latitud"]+"\"><span class=\"text-danger glyphicon glyphicon-globe\"></span> <span class=\"text-danger\"> Centrar en el mapa</span></a></p><br>");
+                $("#list_tramites").append("<button class=\"h6 list-group-item\"><b>"+num_list+".-</b>"+res[i]['DESCRIPCION']+" <br> <b> FOLIO:</b><span>"+res[i]['FOLIO']+"</span> <b> TOTAL:</b><span>"+res[i]['SUPERFICIETOTAL_M2']+"M</span><sup>2</sup><br><a class=\"id_ubicacion\" data-long=\""+res['rows'][i]["longitud"]+"\" data-lat=\""+res['rows'][i]["latitud"]+"\"><span class=\"text-danger glyphicon glyphicon-globe\"></span> <span class=\"text-danger\"> Centrar en el mapa</span></a></button>");
 
                 total += (parseFloat(res[i]['SUPERFICIETOTAL_M2']));
                 num_list++;
             }
+
+            multiplica = 100 * parseInt(total); 
+            divide = parseInt(multiplica) / 1000;
+            // console.log(divide);
+
+            $(".progress-bar").attr('style', 'width:'+divide+'%');
 
             $("#total_metros").html(total);
             $("#total_obra").html(res['rows'].length);
@@ -693,6 +700,17 @@ grap_htime_2 = function(data){
     // console.log(dataCfg);
 
     graptime(dataCfg,"container");
+}
+
+lengend_min = function(){
+    $("#btn_legend").slideDown();
+    $(".cartodb-legend").hide();//mostrar
+}
+
+lengend_max = function(){
+    $("#btn_legend").hide();
+    $(".cartodb-legend").slideDown();//mostrar
+        
 }
 
 graphtime = function(){

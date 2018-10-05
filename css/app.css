@@ -169,6 +169,14 @@ input{
   z-index: 2;
 }
 
+#btn_legend{
+  position: absolute;
+  bottom: 42px;
+  /*right:142px;*/
+  left: 42px;
+  z-index: 2;
+}
+
 #btn_graf_2{
   position: absolute;
   bottom: 42px;

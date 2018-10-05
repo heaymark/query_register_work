@@ -101,7 +101,8 @@
                   <br>
 
                   <div class="row">
-                    <div class="col-md-12 pre-scrollable" id="list_tramites">
+                    <div class="list-group col-md-12 pre-scrollable" id="list_tramites">
+
                     </div>
                   </div>
                   
@@ -111,11 +112,11 @@
                   </div>
                   <div class="row">
                     <div class="col-xs-6 col-sm-6 col-md-6">Total Metros</div>
-                    <div class="col-xs-4 col-sm-4 col-md-4 text-end" id="total_metros"> </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 text-left" id="total_metros"> </div>  <!-- text-end -->
                     <div class="col-xs-2 col-sm-2 col-md-2 text-left">m<sup>2</sup></div>
                   </div>
                   <div class="progress">
-                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:4%">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" > <!-- style="width:4%" -->
                     </div>
                   </div> 
 
@@ -178,18 +179,11 @@
             </div>
           </div>
         </div>
-        <!-- Grafica -->
-        <!-- <div id="toolsgraphics" class="panel panel-default" style="display: none;"> -->
-          <!-- <div class="panel-heading"> -->
-            <!-- <div class="row"> -->
-            <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4" style="display: none;"> <!--   -->
-              <button type="button" id="close_graphic" class="btn btn-danger btn-xs" style="display: none;"> X </button>
-              <!-- <div class="panel-body"> -->
-                <div id="container"></div>   <!-- style="height: 400px; min-width: 310px" -->
-              <!-- </div> -->
-            </div>
-          <!-- </div> -->
-        </div>
+          <!-- Grafica -->
+          <div id="toolsgraphics" class="col-xs-12 col-sm-4 col-md-4" style="display: none;"> <!--   -->
+            <button type="button" id="close_graphic" class="btn btn-danger btn-xs" style="display: none;"> X </button>
+              <div id="container"></div>   <!-- style="height: 400px; min-width: 310px" -->
+          </div>
         <div id="btn_graf" class="btn btn-primary btn-lg"><span class="fa fa-bar-chart" aria-hidden="true"></span></div>
         <div id="btn_graf_2" class="btn btn-primary btn-lg"><span class="fa fa-line-chart" aria-hidden="true"></span></div>
       </div> <!-- <div class="row"> -->
@@ -280,6 +274,10 @@
   </div>
 </div>
 
+
+<button id="btn_legend" class="btn btn-default btn-sm" style="display: none;">
+  <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+</button>
 <div class='cartodb-legend category' style="left:42px; right:initial;">
   <div class="legend-title" style="color:#284a59">Manifestación Const. </div>
     <li class="fa"><img id="status_eject" alt="Smiley face" height="20" width="20"></li>&nbsp;Tipo B <!-- En ejecución -->

@@ -45,6 +45,11 @@ $(function(){
 
     $('.close_filter').on('click',cierrabuscador);
 
+    $('#btn_legend').on('click',lengend_max);
+
+    $('.cartodb-legend').on('click', lengend_min)
+
+
     initial();
     // graph_indice();
 });
