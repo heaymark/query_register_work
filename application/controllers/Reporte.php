@@ -11,117 +11,571 @@ class Reporte extends CI_Controller {
     // $id_proceso = $_POST["idproceso_"];
     $id_proceso = $_GET["idproceso_"];
     $this->load->model('Tramite_model/Tramite_model','tramitemodel');
-    $resultado=$this->tramitemodel->info_pdf($id_proceso);
-    $rs = $resultado->result_array();
+    $rs=$this->tramitemodel->info_pdf($id_proceso);
+    // print_r($rs); exit();
+        $contador = count($rs);
+        // echo $contador;
 
-    $idproceso = $rs[0]['IDPROCESO'];
-    $idtipoproceso = $rs[0]['IDTIPOPROCESO'];
-    $folio = $rs[0]['FOLIO'];
-    $clave = $rs[0]['CLAVE'];
-    $idtiposubproceso = $rs[0]['IDTIPOSUBPROCESO'];
-    $idpredio = $rs[0]['IDPREDIO'];
-    $cuentapredio = $rs[0]['CUENTAPREDIO'];
-    $zonificacion = $rs[0]['ZONIFICACION'];
-    $superficie = $rs[0]['SUPERFICIE'];
-    $usodestino = $rs[0]['USODESTINO'];
-    $idpago = $rs[0]['IDPAGO'];
-    $idobra = $rs[0]['IDOBRA'];
-    $idtipoobra = $rs[0]['IDTIPOOBRA'];
-    $impactourbano = $rs[0]['IMPACTOURBANO'];
-    $impactomedioambiente = $rs[0]['IMPACTOMEDIOAMBIENTE'];
-    $fechaimpactourbano = $rs[0]['FECHAIMPACTOURBANO'];
-    $fechaimpactomedioambiente = $rs[0]['FECHAIMPACTOMEDIOAMBIENTE'];
-    $idobraampliacion = $rs[0]['IDOBRAAMPLIACION'];
-    $superficiecontruida = $rs[0]['SUPERFICIECONTRUIDA'];
-    $superficieexpansion = $rs[0]['SUPERFICIEEXPANSION'];
-    $superficiemodificada = $rs[0]['SUPERFICIEMODIFICADA'];
-    $superficietotal = $rs[0]['SUPERFICIETOTAL'];
-    $idobrareconstruccion = $rs[0]['IDOBRARECONSTRUCCION'];
-    $superficiecontruida1 = $rs[0]['SUPERFICIECONTRUIDA1'];
-    $superficiereparacion = $rs[0]['SUPERFICIEREPARACION'];
-    $reparacionabulladuras = $rs[0]['REPARACIONABULLADURAS'];
-    $numero_lrm = $rs[0]['NUMERO_LRM'];
-    $fecha_expedicion = $rs[0]['FECHA_EXPEDICION'];
-    $idobracaracteristica = $rs[0]['IDOBRACARACTERISTICA'];
-    $superficiepredio = $rs[0]['SUPERFICIEPREDIO'];
-    $superficietotal1 = $rs[0]['SUPERFICIETOTAL1'];
-    $superficiedesplante = $rs[0]['SUPERFICIEDESPLANTE'];
-    $superficiesobrebanqueta = $rs[0]['SUPERFICIESOBREBANQUETA'];
-    $superficiebajobanqueta = $rs[0]['SUPERFICIEBAJOBANQUETA'];
-    $superficieconstsobrebanq = $rs[0]['SUPERFICIECONSTSOBREBANQ'];
-    $alturamaximabanqueta = $rs[0]['ALTURAMAXIMABANQUETA'];
-    $superficieconstbajobanq = $rs[0]['SUPERFICIECONSTBAJOBANQ'];
-    $superficiehabitacional = $rs[0]['SUPERFICIEHABITACIONAL'];
-    $superficienohabitacional = $rs[0]['SUPERFICIENOHABITACIONAL'];
-    $numeroniveles = $rs[0]['NUMERONIVELES'];
-    $numerosotanos = $rs[0]['NUMEROSOTANOS'];
-    $semisotano = $rs[0]['SEMISOTANO'];
-    $numeroviviendas = $rs[0]['NUMEROVIVIENDAS'];
-    $viviendaa = $rs[0]['VIVIENDAA'];
-    $viviendab = $rs[0]['VIVIENDAB'];
-    $viviendac = $rs[0]['VIVIENDAC'];
-    $estacionamientocubierto = $rs[0]['ESTACIONAMIENTOCUBIERTO'];
-    $estacionamientonocubierto = $rs[0]['ESTACIONAMIENTONOCUBIERTO'];
-    $cajonesestacionamiento = $rs[0]['CAJONESESTACIONAMIENTO'];
-    $arealibre = $rs[0]['AREALIBRE'];
-    $arealibre_m2 = $rs[0]['AREALIBRE_M2'];
-    $superficietotal_m2 = $rs[0]['SUPERFICIETOTAL_M2'];
-    $cantidadart181 = $rs[0]['CANTIDADART181'];
-    $cantidadart182 = $rs[0]['CANTIDADART182'];
-    $cantidadart185 = $rs[0]['CANTIDADART185'];
-    $cantidadart300 = $rs[0]['CANTIDADART300'];
-    $cantidadart301 = $rs[0]['CANTIDADART301'];
-    $cantidadart302 = $rs[0]['CANTIDADART302'];
-    $otracantidad = $rs[0]['OTRACANTIDAD'];
-    $cantidadtotal = $rs[0]['CANTIDADTOTAL'];
-    $cantidadotro = $rs[0]['CANTIDADOTRO'];
 
-    $idtitulopredio = $rs[0]['IDTITULOPREDIO'];
-    $notario = $rs[0]['NOTARIO'];
-    $folio1 = $rs[0]['FOLIO1'];
-    $numeronotario = $rs[0]['NUMERONOTARIO'];
-    $estado = $rs[0]['ESTADO'];
-    $foliorrp = $rs[0]['FOLIORRP'];
-    $fechacreacion = $rs[0]['FECHACREACION'];
-    $otrodocumento = $rs[0]['OTRODOCUMENTO'];
-    $iddireccionpredio = $rs[0]['IDDIRECCIONPREDIO'];
-    $iddireccion = $rs[0]['IDDIRECCION'];
-    $calle = $rs[0]['CALLE'];
-    $colonia = $rs[0]['COLONIA'];
-    $numeroexterno = $rs[0]['NUMEROEXTERNO'];
-    $numerointerno = $rs[0]['NUMEROINTERNO'];
-    $ciudad = $rs[0]['CIUDAD'];
-    $delegacion = $rs[0]['DELEGACION'];
-    $codigopostal = $rs[0]['CODIGOPOSTAL'];
-    $idsubproceso = $rs[0]['IDSUBPROCESO'];
-    //print_r($_POST); exit();
-    // $data["test_val"] = $_POST["idproceso"];
-    // $data["tipo_formato"] = $_POST["idtipoproceso"];
-    // Se carga el modelo alumno
-    // $this->load->model('alumno_modelo');
+        if($contador > 0){
+
+            // echo count($rs[0]); // 93
+            // print_r($rs[0]); exit
+            if (array_key_exists('0', $rs)){
+                $contador1 = count($rs[0]);
+
+                if ($contador1 > 0){
+                    $idproceso = $rs[0]["IDPROCESO"];
+                    $folio = $rs[0]["FOLIO"];
+                    $fechacreacion1 = $rs[0]["FECHACREACION1"];
+                    $fechavalidacion = $rs[0]["FECHAVALIDACION"];
+                    $idtiposubproceso = $rs[0]["IDTIPOSUBPROCESO"];
+                    $idtipoproceso = $rs[0]["IDTIPOPROCESO"];
+                    $fechavigencia = $rs[0]["FECHAVIGENCIA"];
+                    $constbajonorma = $rs[0]["CONST_BAJO_NORMA"];
+                    $idpredio = $rs[0]["IDPREDIO"];
+                    $cuentapredio = $rs[0]["CUENTAPREDIO"];
+                    $zonificacion = $rs[0]["ZONIFICACION"];
+                    $superficie = $rs[0]["SUPERFICIE"];
+                    $usodestino = $rs[0]["USODESTINO"];
+                    $idpago = $rs[0]["IDPAGO"];
+                    $idobra = $rs[0]["IDOBRA"];
+                    $idtipoobra = $rs[0]["IDTIPOOBRA"];
+                    $impactourbano = $rs[0]["IMPACTOURBANO"];
+                    $impactomedioambiente = $rs[0]["IMPACTOMEDIOAMBIENTE"];
+                    $fechaimpactourbano = $rs[0]["FECHAIMPACTOURBANO"];
+                    $fechaimpactomedioambiente = $rs[0]["FECHAIMPACTOMEDIOAMBIENTE"];
+                    $idobraampliacion = $rs[0]["IDOBRAAMPLIACION"];
+                    $superficiecontruida = $rs[0]["SUPERFICIECONTRUIDA"];
+                    $superficieexpansion = $rs[0]["SUPERFICIEEXPANSION"];
+                    $superficiemodificada = $rs[0]["SUPERFICIEMODIFICADA"];
+                    $superficietotal = $rs[0]["SUPERFICIETOTAL"]; //calculo para DRO
+                    $idobrareconstruccion = $rs[0]["IDOBRARECONSTRUCCION"];
+                    $superficiecontruida1 = $rs[0]["SUPERFICIECONTRUIDA1"];  //SUPERFICIECONTRUIDA AS 
+                    $superficiereparacion = $rs[0]["SUPERFICIEREPARACION"];
+                    $reparacionabulladuras = $rs[0]["REPARACIONABULLADURAS"];
+                    $numero_lrm = $rs[0]["NUMERO_LRM"];
+                    $fecha_expedicion = $rs[0]["FECHA_EXPEDICION"];
+                    $idobracaracteristica = $rs[0]["IDOBRACARACTERISTICA"];
+                    $superficiepredio = $rs[0]["SUPERFICIEPREDIO"];
+                    $superficietotal1 = $rs[0]["SUPERFICIETOTAL1"];  //SUPERFICIETOTAL AS 
+                    $superficiedesplante = $rs[0]["SUPERFICIEDESPLANTE"];
+                    $superficiesobrebanqueta = $rs[0]["SUPERFICIESOBREBANQUETA"];
+                    $superficiebajobanqueta = $rs[0]["SUPERFICIEBAJOBANQUETA"];
+                    $superficieconstsobrebanq = $rs[0]["SUPERFICIECONSTSOBREBANQ"];
+                    $alturamaximabanqueta = $rs[0]["ALTURAMAXIMABANQUETA"];
+                    $superficieconstbajobanq = $rs[0]["SUPERFICIECONSTBAJOBANQ"];
+                    $superficiehabitacional = $rs[0]["SUPERFICIEHABITACIONAL"];
+                    $superficienohabitacional = $rs[0]["SUPERFICIENOHABITACIONAL"];
+                    $numeroniveles = $rs[0]["NUMERONIVELES"];
+                    $numerosotanos = $rs[0]["NUMEROSOTANOS"];
+                    $semisotano = $rs[0]["SEMISOTANO"];
+                    $numeroviviendas = $rs[0]["NUMEROVIVIENDAS"];
+                    $viviendaa = $rs[0]["VIVIENDAA"];
+                    $viviendab = $rs[0]["VIVIENDAB"];
+                    $viviendac = $rs[0]["VIVIENDAC"];
+                    $estacionamientocubierto = $rs[0]["ESTACIONAMIENTOCUBIERTO"];
+                    $estacionamientonocubierto = $rs[0]["ESTACIONAMIENTONOCUBIERTO"];
+                    $cajonesestacionamiento = $rs[0]["CAJONESESTACIONAMIENTO"];
+                    $arealibre = $rs[0]["AREALIBRE"];
+                    $arealibre_m2 = $rs[0]["AREALIBRE_M2"];
+                    $superficietotal_m2 = $rs[0]["SUPERFICIETOTAL_M2"];
+                    $cantidadart181 = $rs[0]["CANTIDADART181"];
+                    $cantidadart182 = $rs[0]["CANTIDADART182"];
+                    $cantidadart185 = $rs[0]["CANTIDADART185"];
+                    $cantidadart300 = $rs[0]["CANTIDADART300"];
+                    $cantidadart301 = $rs[0]["CANTIDADART301"];
+                    $cantidadart302 = $rs[0]["CANTIDADART302"];
+                    $otracantidad = $rs[0]["OTRACANTIDAD"];
+                    $cantidadtotal = $rs[0]["CANTIDADTOTAL"];
+                    $cantidadotro = $rs[0]["CANTIDADOTRO"];
+                    $idtitulopredio = $rs[0]["IDTITULOPREDIO"];
+                    $notario = $rs[0]["NOTARIO"];
+                    $folio1 = $rs[0]["FOLIO1"];
+                    $numeronotario = $rs[0]["NUMERONOTARIO"];
+                    // $estado = $rs[0]["ESTADO"];
+                    $estado = $rs[0]["NOMBRE1"];
+                    $foliorrp = $rs[0]["FOLIORRP"];
+                    $fechacreacion = $rs[0]["FECHACREACION"];
+                    $otrodocumento = $rs[0]["OTRODOCUMENTO"];
+                    $iddireccionpredio = $rs[0]["IDDIRECCIONPREDIO"];
+                    $iddireccion = $rs[0]["IDDIRECCION"];
+                    $calle = $rs[0]["CALLE"];
+                    $colonia = $rs[0]["COLONIA"];
+                    $numeroexterno = $rs[0]["NUMEROEXTERNO"];
+                    $numerointerno = $rs[0]["NUMEROINTERNO"];
+                    // $ciudad = $rs[0]["CIUDAD"];
+                    $delegacion = $rs[0]["DELEGACION"];
+                    $codigopostal = $rs[0]["CODIGOPOSTAL"];
+                    $idsubproceso = $rs[0]["IDSUBPROCESO"];
+                    $id_desc_clave = $rs[0]["IDCLAVEFORMATO"];
+                    $desc_clave = $rs[0]["DESCRIPCION_CLAVE"];
+                    // $descripcion_clave = $rs[0]["DESCRIPCION_CLAVE"];
+                    $apellido_paterno = $rs[0]["APELLIDO_PATERNO"];
+                    $apllido_materno = $rs[0]["APELLIDO_MATERNO"];
+                    $nombre = $rs[0]["NOMBRE"];
+                    $calle1 = $rs[0]["CALLE1"];
+                    $n_exterior = $rs[0]["N_EXTERIOR"];
+                    $n_interior = $rs[0]["N_INTERIOR"];
+                    $colonia1 = $rs[0]["COLONIA1"];
+                    $delegacion1 = $rs[0]["DELEGACION1"];
+                    $cod_pos = $rs[0]["COD_POS"];
+                    $telefono = $rs[0]["TELEFONO"];
+                    $correo_elect = $rs[0]["CORREO_ELEC"];
+                    // $ASIGNO = $this->asigno($id_proceso);
+                    // $factual = $this->mcp->faseActual($id_proceso)->IDFASE;
+                }
+
+            }
+
+            if (array_key_exists('99', $rs)){
+            // print_r($rs[99]); exit();
+                $contador2 = count($rs[99]);//Capturista
+                if ($contador2 > 0){
+                    $cap_desc_perfil = $rs[99]["DESC_PERFIL"];
+                    $cap_idperfil = $rs[99]["IDPERFIL"];
+                    $cap_rfc = $rs[99]["RFC"];
+                    $cap_apellido_paterno = $rs[99]["APELLIDO_PATERNO"];
+                    $cap_apellido_materno = $rs[99]["APELLIDO_MATERNO"];
+                    $cap_nombre = $rs[99]["NOMBRE"];
+                    $cap_curp = $rs[99]["CURP"];
+                    $cap_razon_social = $rs[99]["RAZON_SOCIAL"];
+                    $cap_idproceso = $rs[99]["IDPROCESO"];
+                    $cap_email = $rs[99]["EMAIL"];
+                    $cap_idpersona = $rs[99]["IDPERSONA"];
+                    $cap_descripcion = $rs[99]["DESCRIPCION"];
+                    $cap_numeroidentificacion = $rs[99]["NUMEROIDENTIFICACION"];
+                    $cap_nacionalidad = $rs[99]["NACIONALIDAD"];
+                    $cap_numero = $rs[99]["NUMERO"];
+                    $cap_telefonoarea = $rs[99]["TELEFONOAREA"];
+                    $cap_telefono = $rs[99]["TELEFONO"];
+                    $cap_extension = $rs[99]["EXTENSION"];
+                    $cap_celular = $rs[99]["CELULAR"];
+                    $cap_documento = $rs[99]["DOCUMENTO"];
+                    $cap_fechavencimiento = $rs[99]["FECHAVENCIMIENTO"];
+                    $cap_actividadautorizada = $rs[99]["ACTIVIDADAUTORIZADA"];
+                    $cap_folio = $rs[99]["FOLIO"];
+                    $cap_fecha_otorgamiento = $rs[99]["FECHA_OTORGAMIENTO"];
+                    $cap_notario = $rs[99]["NOTARIO"];
+                    $cap_numero_notario = $rs[99]["NUMERO_NOTARIO"];
+                    $cap_nombre1 = $rs[99]["NOMBRE1"];
+                    $cap_folio1 = $rs[99]["FOLIO1"];
+                    $cap_notario1 = $rs[99]["NOTARIO1"];
+                    $cap_numeronotario = $rs[99]["NUMERONOTARIO"];
+                    $cap_inscripcion_rppc = $rs[99]["INSCRIPCION_RPPC"];
+                    $cap_calle = $rs[99]["CALLE"];
+                    $cap_num_ext = $rs[99]["NUM_EXT"];
+                    $cap_num_int = $rs[99]["NUM_INT"];
+                    $cap_colonia_alt = $rs[99]["COLONIA_ALT"];
+                    $cap_fecha_alta = $rs[99]["FECHA_ALTA"];
+                    $cap_colonia = $rs[99]["COLONIA"];
+                    $cap_codpos = $rs[99]["CODPOS"];
+                    $cap_del = $rs[99]["DELEGACION"];
+                }
+            }
+
+            if (array_key_exists('1', $rs)){
+                // print_r($rs[1]); exit();
+                $contador3 = count($rs[1]);//Propietario
+                // echo $contador3; exit();
+                if ($contador3 > 0){
+                    $prop_desc_perfil = $rs[1]["DESC_PERFIL"];
+                    $prop_idperfil = $rs[1]["IDPERFIL"];
+                    $prop_rfc = $rs[1]["RFC"];
+                    $prop_apellido_paterno = $rs[1]["APELLIDO_PATERNO"];//
+                    $prop_apellido_materno = $rs[1]["APELLIDO_MATERNO"];//
+                    $prop_nombre = $rs[1]["NOMBRE"];//
+                    $prop_curp = $rs[1]["CURP"];
+                    $prop_razon_social = $rs[1]["RAZON_SOCIAL"];
+                    $prop_idproceso = $rs[1]["IDPROCESO"];
+                    $prop_email = $rs[1]["EMAIL"];
+                    $prop_idpersona = $rs[1]["IDPERSONA"];
+                    $prop_descripcion = $rs[1]["DESCRIPCION"];
+                    $prop_numeroidentificacion = $rs[1]["NUMEROIDENTIFICACION"];//
+                    $prop_nacionalidad = $rs[1]["NACIONALIDAD"];//
+                    $prop_numero = $rs[1]["NUMERO"];//
+                    $prop_telefonoarea = $rs[1]["TELEFONOAREA"];
+                    $prop_telefono = $rs[1]["TELEFONO"];
+                    $prop_extension = $rs[1]["EXTENSION"];
+                    $prop_celular = $rs[1]["CELULAR"];
+                    $prop_documento = $rs[1]["DOCUMENTO"];//
+                    $prop_fechavencimiento = $rs[1]["FECHAVENCIMIENTO"];//
+                    $prop_actividadautorizada = $rs[1]["ACTIVIDADAUTORIZADA"];//
+                    $prop_folio = $rs[1]["FOLIO"];//
+                    $prop_fecha_otorgamiento = $rs[1]["FECHA_OTORGAMIENTO"];//
+                    $prop_notario = $rs[1]["NOTARIO"];//
+                    $prop_numero_notario = $rs[1]["NUMERO_NOTARIO"];//
+                    $prop_nombre1 = $rs[1]["NOMBRE1"];//
+                    $prop_folio1 = $rs[1]["FOLIO1"];
+                    $prop_notario1 = $rs[1]["NOTARIO1"];
+                    $prop_numeronotario = $rs[1]["NUMERONOTARIO"];
+                    $prop_inscripcion_rppc = $rs[1]["INSCRIPCION_RPPC"];
+                    $prop_calle = $rs[1]["CALLE"];
+                    $prop_num_ext = $rs[1]["NUM_EXT"];
+                    $prop_num_int = $rs[1]["NUM_INT"];
+                    $prop_colonia_alt = $rs[1]["COLONIA_ALT"];
+                    $prop_fecha_alta = $rs[1]["FECHA_ALTA"];
+                    $prop_colonia = $rs[1]["COLONIA"];
+                    $prop_codpos = $rs[1]["CODPOS"];
+                    $prop_del = $rs[1]["DELEGACION"];
+                }
+            }
+            if (array_key_exists('2', $rs)){
+                // print_r($rs[2]); exit();
+                $contador4 = count($rs[2]);//Rep. Legal
+                // echo $contador4; exit();
+                if ($contador4 > 0){
+                    $rep_desc_perfil = $rs[2]["DESC_PERFIL"];
+                    $rep_idperfil = $rs[2]["IDPERFIL"];
+                    $rep_rfc = $rs[2]["RFC"];
+                    $rep_apellido_paterno = $rs[2]["APELLIDO_PATERNO"];//
+                    $rep_apellido_materno = $rs[2]["APELLIDO_MATERNO"];//
+                    $rep_nombre = $rs[2]["NOMBRE"];//
+                    $rep_curp = $rs[2]["CURP"];
+                    $rep_razon_social = $rs[2]["RAZON_SOCIAL"];
+                    $rep_idproceso = $rs[2]["IDPROCESO"];
+                    $rep_email = $rs[2]["EMAIL"];
+                    $rep_idpersona = $rs[2]["IDPERSONA"];
+                    $rep_descripcion = $rs[2]["DESCRIPCION"];
+                    $rep_numeroidentificacion = $rs[2]["NUMEROIDENTIFICACION"];//
+                    $rep_nacionalidad = $rs[2]["NACIONALIDAD"];//
+                    $rep_numero = $rs[2]["NUMERO"];//
+                    $rep_telefonoarea = $rs[2]["TELEFONOAREA"];
+                    $rep_telefono = $rs[2]["TELEFONO"];
+                    $rep_extension = $rs[2]["EXTENSION"];
+                    $rep_celular = $rs[2]["CELULAR"];
+                    $rep_documento = $rs[2]["DOCUMENTO"];
+                    $rep_fechavencimiento = $rs[2]["FECHAVENCIMIENTO"];
+                    $rep_actividadautorizada = $rs[2]["ACTIVIDADAUTORIZADA"];
+                    $rep_folio = $rs[2]["FOLIO"];
+                    $rep_fecha_otorgamiento = $rs[2]["FECHA_OTORGAMIENTO"];
+                    $rep_notario = $rs[2]["NOTARIO"];
+                    $rep_numero_notario = $rs[2]["NUMERO_NOTARIO"];
+                    $rep_nombre1 = $rs[2]["NOMBRE1"];
+                    $rep_folio1 = $rs[2]["FOLIO1"];//
+                    $rep_notario1 = $rs[2]["NOTARIO1"];//
+                    $rep_numeronotario = $rs[2]["NUMERONOTARIO"];//
+                    $rep_inscripcion_rppc = $rs[2]["INSCRIPCION_RPPC"];//
+                    $rep_idestado_2 = $rs[2]["IDESTADO_2"];//
+                    $rep_calle = $rs[2]["CALLE"];
+                    $rep_num_ext = $rs[2]["NUM_EXT"];
+                    $rep_num_int = $rs[2]["NUM_INT"];
+                    $rep_colonia_alt = $rs[2]["COLONIA_ALT"];
+                    $rep_fecha_alta = $rs[2]["FECHA_ALTA"];
+                    $rep_colonia = $rs[2]["COLONIA"];
+                    $rep_codpos = $rs[2]["CODPOS"];
+                    $rep_del = $rs[2]["DELEGACION"];
+                    $rep_fecha = $rs[2]["FECHA"];//
+                    $rep_folio_1 = $rs[2]["FOLIO_1"];//
+                    $rep_idestado_1 = $rs[2]["IDESTADO_1"];//
+                }
+            }
+            if (array_key_exists('3', $rs)){            
+                // echo count($rs[3]); // 31
+                // print_r($rs[3]); exit();
+                $contador5 = count($rs[3]); //DRO
+                if ($contador5 > 0){
+                    $dro_desc_perfil = $rs[3]["DESC_PERFIL"];
+                    $dro_idperfil = $rs[3]["IDPERFIL"];
+                    $dro_rfc = $rs[3]["RFC"];
+                    $dro_apellido_paterno = $rs[3]["APELLIDO_PATERNO"];
+                    $dro_apellido_materno = $rs[3]["APELLIDO_MATERNO"];
+                    $dro_nombre = $rs[3]["NOMBRE"];
+                    $dro_curp = $rs[3]["CURP"];
+                    $dro_razon_social = $rs[3]["RAZON_SOCIAL"];
+                    $dro_idproceso = $rs[3]["IDPROCESO"];
+                    $dro_email = $rs[3]["EMAIL"];
+                    $dro_idpersona = $rs[3]["IDPERSONA"];
+                    $dro_descripcion = $rs[3]["DESCRIPCION"];
+                    $dro_numeroidentificacion = $rs[3]["NUMEROIDENTIFICACION"];
+                    $dro_nacionalidad = $rs[3]["NACIONALIDAD"];
+                    $dro_numero = $rs[3]["NUMERO"];
+                    $dro_telefonoarea = $rs[3]["TELEFONOAREA"];
+                    $dro_telefono = $rs[3]["TELEFONO"];
+                    $dro_extension = $rs[3]["EXTENSION"];
+                    $dro_celular = $rs[3]["CELULAR"];
+                    $dro_documento = $rs[3]["DOCUMENTO"];
+                    $dro_fechavencimiento = $rs[3]["FECHAVENCIMIENTO"];
+                    $dro_actividadautorizada = $rs[3]["ACTIVIDADAUTORIZADA"];
+                    $dro_folio = $rs[3]["FOLIO"];
+                    $dro_fecha_otorgamiento = $rs[3]["FECHA_OTORGAMIENTO"];
+                    $dro_notario = $rs[3]["NOTARIO"];
+                    $dro_numero_notario = $rs[3]["NUMERO_NOTARIO"];
+                    $dro_nombre1 = $rs[3]["NOMBRE1"];
+                    $dro_folio1 = $rs[3]["FOLIO1"];
+                    $dro_notario1 = $rs[3]["NOTARIO1"];
+                    $dro_numeronotario = $rs[3]["NUMERONOTARIO"];
+                    $dro_inscripcion_rppc = $rs[3]["INSCRIPCION_RPPC"];
+                    $dro_calle = $rs[3]["CALLE"];
+                    $dro_num_ext = $rs[3]["NUM_EXT"];
+                    $dro_num_int = $rs[3]["NUM_INT"];
+                    $dro_colonia_alt = $rs[3]["COLONIA_ALT"];
+                    $dro_fecha_alta = $rs[3]["FECHA_ALTA"];
+                    $dro_colonia = $rs[3]["COLONIA"];
+                    $dro_codpos = $rs[3]["CODPOS"];
+                    $dro_del = $rs[3]["DELEGACION"];
+                }
+            }
+            if (array_key_exists('4', $rs)){
+                // echo count($rs[4]); // 31
+                // print_r($rs[4]); exit();
+                $contador6 = count($rs[4]); //CSE
+                // echo $contador6; exit();
+                if ($contador6 > 0){
+                    $cse_desc_perfil = $rs[4]["DESC_PERFIL"];
+                    $cse_idperfil = $rs[4]["IDPERFIL"];
+                    $cse_rfc = $rs[4]["RFC"];
+                    $cse_apellido_paterno = $rs[4]["APELLIDO_PATERNO"];
+                    $cse_apellido_materno = $rs[4]["APELLIDO_MATERNO"];
+                    $cse_nombre = $rs[4]["NOMBRE"];
+                    $cse_curp = $rs[4]["CURP"];
+                    $cse_razon_social = $rs[4]["RAZON_SOCIAL"];
+                    $cse_idproceso = $rs[4]["IDPROCESO"];
+                    $cse_email = $rs[4]["EMAIL"];
+                    $cse_idpersona = $rs[4]["IDPERSONA"];
+                    $cse_descripcion = $rs[4]["DESCRIPCION"];
+                    $cse_numeroidentificacion = $rs[4]["NUMEROIDENTIFICACION"];
+                    $cse_nacionalidad = $rs[4]["NACIONALIDAD"];
+                    $cse_numero = $rs[4]["NUMERO"];
+                    $cse_telefonoarea = $rs[4]["TELEFONOAREA"];
+                    $cse_telefono = $rs[4]["TELEFONO"];
+                    $cse_extension = $rs[4]["EXTENSION"];
+                    $cse_celular = $rs[4]["CELULAR"];
+                    $cse_documento = $rs[4]["DOCUMENTO"];
+                    $cse_fechavencimiento = $rs[4]["FECHAVENCIMIENTO"];
+                    $cse_actividadautorizada = $rs[4]["ACTIVIDADAUTORIZADA"];
+                    $cse_folio = $rs[4]["FOLIO"];
+                    $cse_fecha_otorgamiento = $rs[4]["FECHA_OTORGAMIENTO"];
+                    $cse_notario = $rs[4]["NOTARIO"];
+                    $cse_numero_notario = $rs[4]["NUMERO_NOTARIO"];
+                    $cse_nombre1 = $rs[4]["NOMBRE1"];
+                    $cse_folio1 = $rs[4]["FOLIO1"];
+                    $cse_notario1 = $rs[4]["NOTARIO1"];
+                    $cse_numeronotario = $rs[4]["NUMERONOTARIO"];
+                    $cse_inscripcion_rppc = $rs[4]["INSCRIPCION_RPPC"];
+                    $cse_calle = $rs[4]["CALLE"];
+                    $cse_num_ext = $rs[4]["NUM_EXT"];
+                    $cse_num_int = $rs[4]["NUM_INT"];
+                    $cse_colonia_alt = $rs[4]["COLONIA_ALT"];
+                    $cse_fecha_alta = $rs[4]["FECHA_ALTA"];
+                    $cse_colonia = $rs[4]["COLONIA"];
+                    $cse_codpos = $rs[4]["CODPOS"];
+                    $cse_del = $rs[4]["DELEGACION"];
+                }
+            }
+            if (array_key_exists('5', $rs)){
+                // echo count($rs[5]); // 31
+                // print_r($rs[5]); exit();
+                $contador7 = count($rs[5]); //CDUyA
+                if ($contador7 > 0){
+                    $cdu_desc_perfil = $rs[5]["DESC_PERFIL"];
+                    $cdu_idperfil = $rs[5]["IDPERFIL"];
+                    $cdu_rfc = $rs[5]["RFC"];
+                    $cdu_apellido_paterno = $rs[5]["APELLIDO_PATERNO"];
+                    $cdu_apellido_materno = $rs[5]["APELLIDO_MATERNO"];
+                    $cdu_nombre = $rs[5]["NOMBRE"];
+                    $cdu_curp = $rs[5]["CURP"];
+                    $cdu_razon_social = $rs[5]["RAZON_SOCIAL"];
+                    $cdu_idproceso = $rs[5]["IDPROCESO"];
+                    $cdu_email = $rs[5]["EMAIL"];
+                    $cdu_idpersona = $rs[5]["IDPERSONA"];
+                    $cdu_descripcion = $rs[5]["DESCRIPCION"];
+                    $cdu_numeroidentificacion = $rs[5]["NUMEROIDENTIFICACION"];
+                    $cdu_nacionalidad = $rs[5]["NACIONALIDAD"];
+                    $cdu_numero = $rs[5]["NUMERO"];
+                    $cdu_telefonoarea = $rs[5]["TELEFONOAREA"];
+                    $cdu_telefono = $rs[5]["TELEFONO"];
+                    $cdu_extension = $rs[5]["EXTENSION"];
+                    $cdu_celular = $rs[5]["CELULAR"];
+                    $cdu_documento = $rs[5]["DOCUMENTO"];
+                    $cdu_fechavencimiento = $rs[5]["FECHAVENCIMIENTO"];
+                    $cdu_actividadautorizada = $rs[5]["ACTIVIDADAUTORIZADA"];
+                    $cdu_folio = $rs[5]["FOLIO"];
+                    $cdu_fecha_otorgamiento = $rs[5]["FECHA_OTORGAMIENTO"];
+                    $cdu_notario = $rs[5]["NOTARIO"];
+                    $cdu_numero_notario = $rs[5]["NUMERO_NOTARIO"];
+                    $cdu_nombre1 = $rs[5]["NOMBRE1"];
+                    $cdu_folio1 = $rs[5]["FOLIO1"];
+                    $cdu_notario1 = $rs[5]["NOTARIO1"];
+                    $cdu_numeronotario = $rs[5]["NUMERONOTARIO"];
+                    $cdu_inscripcion_rppc = $rs[5]["INSCRIPCION_RPPC"];
+                    $cdu_calle = $rs[5]["CALLE"];
+                    $cdu_num_ext = $rs[5]["NUM_EXT"];
+                    $cdu_num_int = $rs[5]["NUM_INT"];
+                    $cdu_colonia_alt = $rs[5]["COLONIA_ALT"];
+                    $cdu_fecha_alta = $rs[5]["FECHA_ALTA"];
+                    $cdu_colonia = $rs[5]["COLONIA"];
+                    $cdu_codpos = $rs[5]["CODPOS"];
+                    $cdu_del = $rs[5]["DELEGACION"];
+                }
+            }
+            if (array_key_exists('6', $rs)){
+                // echo count($rs[6]); // 31
+                // print_r($rs[6]); exit();
+                $contador8 = count($rs[6]); //CI
+                if ($contador8 > 0){
+                    $ci_desc_perfil = $rs[6]["DESC_PERFIL"];
+                    $ci_idperfil = $rs[6]["IDPERFIL"];
+                    $ci_rfc = $rs[6]["RFC"];
+                    $ci_apellido_paterno = $rs[6]["APELLIDO_PATERNO"];
+                    $ci_apellido_materno = $rs[6]["APELLIDO_MATERNO"];
+                    $ci_nombre = $rs[6]["NOMBRE"];
+                    $ci_curp = $rs[6]["CURP"];
+                    $ci_razon_social = $rs[6]["RAZON_SOCIAL"];
+                    $ci_idproceso = $rs[6]["IDPROCESO"];
+                    $ci_email = $rs[6]["EMAIL"];
+                    $ci_idpersona = $rs[6]["IDPERSONA"];
+                    $ci_descripcion = $rs[6]["DESCRIPCION"];
+                    $ci_numeroidentificacion = $rs[6]["NUMEROIDENTIFICACION"];
+                    $ci_nacionalidad = $rs[6]["NACIONALIDAD"];
+                    $ci_numero = $rs[6]["NUMERO"];
+                    $ci_telefonoarea = $rs[6]["TELEFONOAREA"];
+                    $ci_telefono = $rs[6]["TELEFONO"];
+                    $ci_extension = $rs[6]["EXTENSION"];
+                    $ci_celular = $rs[6]["CELULAR"];
+                    $ci_documento = $rs[6]["DOCUMENTO"];
+                    $ci_fechavencimiento = $rs[6]["FECHAVENCIMIENTO"];
+                    $ci_actividadautorizada = $rs[6]["ACTIVIDADAUTORIZADA"];
+                    $ci_folio = $rs[6]["FOLIO"];
+                    $ci_fecha_otorgamiento = $rs[6]["FECHA_OTORGAMIENTO"];
+                    $ci_notario = $rs[6]["NOTARIO"];
+                    $ci_numero_notario = $rs[6]["NUMERO_NOTARIO"];
+                    $ci_nombre1 = $rs[6]["NOMBRE1"];
+                    $ci_folio1 = $rs[6]["FOLIO1"];
+                    $ci_notario1 = $rs[6]["NOTARIO1"];
+                    $ci_numeronotario = $rs[6]["NUMERONOTARIO"];
+                    $ci_inscripcion_rppc = $rs[6]["INSCRIPCION_RPPC"];
+                    $ci_calle = $rs[6]["CALLE"];
+                    $ci_num_ext = $rs[6]["NUM_EXT"];
+                    $ci_num_int = $rs[6]["NUM_INT"];
+                    $ci_colonia_alt = $rs[6]["COLONIA_ALT"];
+                    $ci_fecha_alta = $rs[6]["FECHA_ALTA"];
+                    $ci_colonia = $rs[6]["COLONIA"];
+                    $ci_codpos = $rs[6]["CODPOS"];
+                    $ci_del = $rs[6]["DELEGACION"];
+                }
+            }
+
+        }
+
+    $this->load->model('model_control_proceso/Model_control_proceso');
+    $res = $this->Model_control_proceso->faseActual($idproceso);
+
+    if ($res->IDFASE >= 4) {
+        $borrador = 0; // incluye la marca de agua
+        
+    }else{
+
+        $borrador = 1; // incluye la marca de agua
+    }
+
+    $tipo =  ($idtiposubproceso > 6 && $idtiposubproceso <= 12) ? "C" : "B";
+
     // Se carga la libreria fpdf
     $this->load->library('pdf');
- 
-    // Se obtienen los alumnos de la base de datos
-    // $alumnos = $this->alumno_modelo->obtenerListaAlumnos();
-    // Creacion del PDF
- 
-    /*
-     * Se crea un objeto de la clase Pdf, recuerda que la clase Pdf
-     * heredó todos las variables y métodos de fpdf
-    */
-    // echo "About to create pdf";
-
-    $this->pdf = new Pdf();
+    /*Se crea un objeto de la clase Pdf, recuerda que la clase Pdf heredó todos las variables y métodos de fpdf*/
+    $this->pdf = new Pdf();    
+    $this->pdf->header = 1;
     // Agregamos una página
+    // AliasNbPages
+    // $headerVisible="true";
     $this->pdf->AddPage();
+
+    switch($id_desc_clave) {
+        case 0:
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/logoseduvi.png',58,12,26);
+            break;
+        // case "MAGDALENA CONTRERAS":
+        case 1:
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/MAGDALENA.jpg',64,12,11);
+            break;
+        // case "ALVARO OBREGON":
+        case 2:
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/ALVARO.jpg',64,12,11);
+            break;
+        // case "TLALPAN":
+        case 3:
+            // $("#clave_formato").val('TTLALPAN_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/TLALPAN.jpg',64,12,11);
+            break;
+        // case "XOCHIMILCO":
+        case 4:
+            // $("#clave_formato").val('TXOCH_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/XOCHIMILCO.jpg',64,12,11);
+            break;
+        // case "BENITO JUAREZ":
+        case 5:
+            // $("#clave_formato").val('TBJUAREZ_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/BENITO.jpg',64,12,11);
+            break;
+        // case "MIGUEL HIDALGO":
+        case 6:
+            // $("#clave_formato").val('TMHIDALGO_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/MIGUEL.jpg',64,12,11);
+            break;
+        // case "MILPA ALTA":
+        case 7:
+            // $("#clave_formato").val('TMILPAALTA_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/MILPALTA.jpg',64,12,11);
+            break;
+        // case "CUAUHTEMOC":
+        case 8:
+            // $("#clave_formato").val('TCUH_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/CUAUHTEMOC.jpg',64,12,11);
+            break;
+        // case "GUSTAVO A. MADERO":
+        case 9:
+            // $("#clave_formato").val('TGAM_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/GUSTAVO.jpg',64,12,11);
+            break;
+        // case "VENUSTIANO CARRANZA":
+        case 10:
+            // $("#clave_formato").val('TVCARRANZA_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/VENUSTIANO.jpg',64,12,11);
+            break;
+        // case "IZTAPALAPA":
+        case 11:
+            // $("#clave_formato").val('TIZTAPALAPA_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/IZTAPALAPA.jpg',64,12,11);
+            break;
+        // case "CUAJIMALPA DE MORELOS":
+        case 12:
+            // $("#clave_formato").val('TCUAJIMALPA_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/CUAJIMALPA.jpg',64,12,11);
+            break;
+        // case "IZTACALCO":
+        case 13:
+            // $("#clave_formato").val('TIZTAC_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/IZTACALCO.jpg',64,12,11);
+            break;
+        // case "COYOACAN":
+        case 14:
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/COYOACAN.jpg',64,12,11);
+            break;
+        // case "TLAHUAC":
+        case 15:
+            // $("#clave_formato").val('TTLH_RMC_2');
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/TLAHUAC.jpg',64,12,11);
+            break;
+        // case "AZCAPOTZALCO":
+        case 16:
+            $this->pdf->Image(APPPATH.'/third_party/imagenes/AZCAPOTZALCO.jpg',64,12,11);
+            break;
+        // default:
+        //     $("#clave_formato").val('NO SE ENCONTRO');
+    }
+
+    if($borrador == 1){
+        $this->pdf->SetFont('Arial','B',50);
+        $this->pdf->SetTextColor(255,192,203);
+        $this->pdf->RotatedText(35,190,'     B  O  R  R  A  D  O  R     ',45);
+        $this->pdf->SetTextColor(0,0,0);
+    }
+
     // Define el alias para el número de página que se imprimirá en el pie
     $this->pdf->AliasNbPages();
- 
-    /* Se define el titulo, márgenes izquierdo, derecho y
-     * el color de relleno predeterminado
-     */
-    // $this->pdf->SetTitle("Lista de alumnos");
+
+    // Se define el titulo, márgenes izquierdo, derecho y el color de relleno predeterminado
     $this->pdf->SetTitle(utf8_decode("Manifiestación de contrucción"));
     $this->pdf->SetLeftMargin(15);
     $this->pdf->SetRightMargin(15);
@@ -129,13 +583,8 @@ class Reporte extends CI_Controller {
  
     // Se define el formato de fuente: Arial, negritas, tamaño 9
     // $this->pdf->SetFont('Arial', 'B', 7);
-    /*
-     * TITULOS DE COLUMNAS
-     *
-     * $this->pdf->Cell(Ancho, Alto,texto,borde,posición,alineación,relleno);
-     */
-    //$folio ="TSEDUVI-CGDAU"; 
-    $clave_formato = "TSEDUVI-CGDAU_RMC_2";
+
+    $clave_formato = $desc_clave;//"TSEDUVI-CGDAU_RMC_2";
     $nombre_tramite = "REGISTRO DE MANIFESTACION DE CONTRUCCION TIPO 'B' O 'C' ";
 
     if ($idtipoproceso == 1){
@@ -146,13 +595,20 @@ class Reporte extends CI_Controller {
         $manifiestoC = "'SI'";
     }
 
-    $respuestaSI = "'X'"; //de donde sale ¿?
-    $respuestaNO = "'X'"; //de donde sale ¿?
+    if ($constbajonorma == 1) {
+        $respuestaSI = "'X'"; 
+        $respuestaNO = " "; 
+    }else{
+        $respuestaSI = " "; 
+        $respuestaNO = "'X'"; 
+    }
 
-    $fechaDia = date('d'); // es la fecha en que le da imprimir ¿? 
-    $fechaMes = date('F'); // es la fecha en que le da imprimir ¿? 
-    $fechaAnio =  date('Y'); // es la fecha en que le da imprimir ¿? 
-    $director = "Pedro Valdes"; // ¿Quien es ? 
+    $dato = explode("-", $fechacreacion1);  
+    // echo $fechacreacion; exit();
+    $fechaDia = $dato[0];//date('d'); // es la fecha en que le da imprimir ¿? 
+    $fechaMes = $dato[1];//date('F'); // es la fecha en que le da imprimir ¿? 
+    $fechaAnio =  "20".$dato[2];//date('Y'); // es la fecha en que le da imprimir ¿? 
+    $director = '';// "Pedro Valdes"; // ¿Quien es ? 
 
     $this->pdf->SetFont('Arial', '', 6.5);
     $this->pdf->SetXY(160, 12);
@@ -228,12 +684,12 @@ class Reporte extends CI_Controller {
     ##########################
 
     ## DATOS DEL INTERESADO  ####
-    $nombreInteresado = 'Mario Antonio'; 
-    $apellidoPaternoI = 'Rivera';
-    $apellidoMaternoI = 'Jacinto';
-    $idOficialI ='4GT35DDE';
-    $numFolioI = '14262637737373';
-    $nacionI = "Mexicana";
+    $nombreInteresado =  $prop_nombre;//'Mario Antonio'; 
+    $apellidoPaternoI = $prop_apellido_paterno; //'Rivera';
+    $apellidoMaternoI = $prop_apellido_materno; //'Jacinto';
+    $idOficialI = $prop_numeroidentificacion;//'4GT35DDE';
+    $numFolioI = $prop_numero;//'14262637737373';
+    $nacionI = $prop_nacionalidad;//"Mexicana";
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,5, utf8_decode('DATOS DEL INTERESADO, PROPIETARIO O POSEEDOR (PERSONA FÍSICA)'),1,0,'L','1');
     $this->pdf->SetFont('Arial', '', 6);
@@ -269,9 +725,9 @@ class Reporte extends CI_Controller {
     ##########################
 
     ## En su caso  ####
-    $documentoacredita = "Documento que acredita";
-    $fechavencimiento = '11 de Abril del 2018 ';
-    $actividad ="Actividad Mexicana";
+    $documentoacredita = $prop_documento;//"Documento que acredita";
+    $fechavencimiento = $prop_fechavencimiento;//'11 de Abril del 2018 ';
+    $actividad = $prop_actividadautorizada;//"Actividad Mexicana";
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,5, utf8_decode('En su caso'),1,0,'L','1');
     $this->pdf->SetFont('Arial', '', 7);
@@ -289,12 +745,12 @@ class Reporte extends CI_Controller {
     ##########################
 
     ## DATOS DEL INTERESADO MORAL ####
-    $denominacionRS = 'Mario Antonio';
-    $numero_poliza = 'Rivera';
-    $fecha_otrogamiento = 'Jacinto';
-    $nombreNotario ='Pet Valdez ';
-    $num_notaria = '2345432';
-    $entidadfederativa = 'Jacinto';
+    $denominacionRS = $prop_razon_social;//'Mario Antonio';
+    $numero_poliza = $prop_folio;//'Rivera';
+    $fecha_otrogamiento = $prop_fecha_otorgamiento;//'Jacinto';
+    $nombreNotario = $prop_notario;//'Pet Valdez ';
+    $num_notaria = $prop_numero_notario;//'2345432';
+    $entidadfederativa = $prop_nombre1;//'Jacinto';
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,5, utf8_decode('DATOS DEL INTERESADO, PROPIETARIO O POSEEDOR (PERSONA MORAL)'),1,0,'L','1');
     $this->pdf->SetFont('Arial', '', 6);
@@ -331,9 +787,9 @@ class Reporte extends CI_Controller {
     ##########################
 
     ## Inscripción  ####
-    $folio_numero_ins = '284DEDE ';
-    $fecha_ins = "11 de Abril del 2018";
-    $entidad_fed_ins = " Mexico";
+    $folio_numero_ins = $rep_folio_1;//'284DEDE ';
+    $fecha_ins = $rep_fecha;//"11 de Abril del 2018";
+    $entidad_fed_ins = $rep_idestado_1;//" Mexico";
 
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,5, utf8_decode('Inscripción en el Registro Público de la Propiedad y de Comercio'),1,0,'L','1');
@@ -350,12 +806,12 @@ class Reporte extends CI_Controller {
     ##########################
 
     ## DATOS DEL REPRESENTANTE  ####
-    $nombreRepresentante = 'Mario Antonio'; 
-    $apellidoPaternoR = 'Rivera';
-    $apellidoMaternoR = 'Jacinto';
-    $idOficialR ='4GT35DDE';
-    $numFolioR = '14262637737373';
-    $nacionR = "Mexicana";
+    $nombreRepresentante = $rep_nombre;//'Mario Antonio'; 
+    $apellidoPaternoR = $rep_apellido_paterno;//'Rivera';
+    $apellidoMaternoR = $rep_apellido_materno;//'Jacinto';
+    $idOficialR =$rep_numeroidentificacion;//'4GT35DDE';
+    $numFolioR = $rep_numero;//'14262637737373';
+    $nacionR = $rep_nacionalidad;//"Mexicana";
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('DATOS DEL REPRESENTANTE LEGAL O APODERADO'),1,0,'L','1');
     $this->pdf->SetFont('Arial', '', 6);
@@ -387,11 +843,11 @@ class Reporte extends CI_Controller {
     ##########################
     
     ## INSTURMENTO  ####
-    $folioInstrumento = '37dudu';
-    $nombrenotario_Inst = 'Jacinto';
-    $num_notaria_Inst = '4GT35DDE';
-    $entidad_fed_Inst = '14262637737373';
-    $inscripcion_Inst = "Mexicana";
+    $folioInstrumento = $rep_folio1;//'37dudu';
+    $nombrenotario_Inst = $rep_notario1;//'Jacinto';
+    $num_notaria_Inst = $rep_numeronotario;//'4GT35DDE';
+    $entidad_fed_Inst = $rep_idestado_2;//'14262637737373';
+    $inscripcion_Inst = $rep_inscripcion_rppc;//"Mexicana";
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('Instrumento o documento con el que acredita la representación'),1,0,'L','1');
     $this->pdf->SetFont('Arial', '', 7);
@@ -420,20 +876,27 @@ class Reporte extends CI_Controller {
 
     $this->pdf->Cell(73,5,utf8_decode("Inscripción en el Registro Público de la Propiedad y de Comercio:"),'LB',0,'L',0);
     $this->pdf->Cell(0,5,utf8_decode($inscripcion_Inst),'BR',0,'L',0); //dato
+
     $this->pdf->Ln(5);
     ##########################
     $this->pdf->addPage();//Salto
+    if($borrador == 1){
+        $this->pdf->SetFont('Arial','B',50);
+        $this->pdf->SetTextColor(255,192,203);
+        $this->pdf->RotatedText(35,190,'     B  O  R  R  A  D  O  R     ',45);
+        $this->pdf->SetTextColor(0,0,0);
+    }
     
 
     ## DOMICILIO PARA OIR  ####
-    $calle_oir = 'Cincel';
-    $no_ext_oir = '85';
-    $no_int_oir = "'B'";
-    $colonia_oir = "Sevilla";
-    $delegacion_oir = 'Venustiano Carranza';
-    $cp_oir = '91680';
-    $tel_oir = "28383948488";
-    $correo_oir = "maro.rivera@gmail.com";
+    $calle_oir = strtoupper($calle1);//'Cincel';
+    $no_ext_oir = $n_exterior;//'85';
+    $no_int_oir = $n_interior;//"'B'";
+    $colonia_oir = strtoupper($colonia1);//"Sevilla";
+    $delegacion_oir = strtoupper($delegacion1);//'Venustiano Carranza';
+    $cp_oir = $cod_pos;//'91680';
+    $tel_oir = $telefono;//"28383948488";
+    $correo_oir = $correo_elect;//"maro.rivera@gmail.com";
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('DOMICILIO PARA OIR Y RECIBIR NOTIFICACIONES Y DOCUMENTOS EN LA CIUDAD DE MÉXICO'),1,0,'L','1');
     $this->pdf->SetFont('Arial', '', 6);
@@ -466,9 +929,9 @@ class Reporte extends CI_Controller {
     ##########################
 
     ## PERSONA AUTORIZADA  ####
-    $nombre_autoriza = 'Mario Antonio';
-    $ap_autoriza = 'Rivera';
-    $am_autoriza ='Jacinto';
+    $nombre_autoriza = strtoupper($nombre);//'Mario Antonio';
+    $ap_autoriza = strtoupper($apellido_paterno);//'Rivera';
+    $am_autoriza = strtoupper($apllido_materno);//'Jacinto';
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('Persona autorizada para oír y recibir notificaciones y documentos'),1,0,'L','1');
     $this->pdf->SetFont('Arial', '', 6);
@@ -567,6 +1030,13 @@ class Reporte extends CI_Controller {
     $this->pdf->MultiCell(0,3,utf8_decode($sample_text14),0,'J',0);
 
     $this->pdf->addPage();//Salto
+    if($borrador == 1){
+        $this->pdf->SetFont('Arial','B',50);
+        $this->pdf->SetTextColor(255,192,203);
+        $this->pdf->RotatedText(35,190,'     B  O  R  R  A  D  O  R     ',45);
+        $this->pdf->SetTextColor(0,0,0);
+    }
+    $this->pdf->SetFont('Arial', '', 6);
 
     $sample_text15="15.Póliza vigente del seguro de responsabilidad civil por daños a terceros en las obras clasificadas en el grupo A y subgrupo B1, según el artículo 139 del Reglamento, por un monto asegurado no menor del 10% del costo total de la obra construida por el tiempo de vigencia de la Manifestación de Construcción. (Original y copia).";
     $this->pdf->MultiCell(90,3,utf8_decode($sample_text15),'TBLR','J',0);
@@ -728,13 +1198,13 @@ class Reporte extends CI_Controller {
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(10,5, utf8_decode("Notario: "),'L',0,'L',0);
-    $this->pdf->Cell(90,5, utf8_decode($notario),0,0,'L',0);//dato Nombres
+    $this->pdf->Cell(90,5, utf8_decode(strtoupper($notario)),0,0,'L',0);//dato Nombres
     $this->pdf->Cell(16,5, utf8_decode("No.: "),0,0,'L',0);
     $this->pdf->Cell(0,5, utf8_decode($numeronotario),'R',0,'L',0);//dato Nombres
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(27,5, utf8_decode("Entidad Federativa: "),'L',0,'L',0);
-    $this->pdf->Cell(00,5, utf8_decode($estado),'R',0,'L',0);//dato Nombres
+    $this->pdf->Cell(00,5, utf8_decode(strtoupper($estado)),'R',0,'L',0);//dato Nombres
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(85,5, utf8_decode("Folio de Inscripción en el Registro Público de la Propiedad y de Comercio: "),'L',0,'L',0);
@@ -744,14 +1214,13 @@ class Reporte extends CI_Controller {
     $this->pdf->Cell(20,5, utf8_decode("Fecha: "),'BL',0,'L',0);
     $this->pdf->Cell(70,5, utf8_decode($fechacreacion),'B',0,'L',0);//dato Nombres
     $this->pdf->Cell(20,5, utf8_decode("Otro documento: "),'B',0,'L',0);
-    $this->pdf->Cell(0,5, utf8_decode($otrodocumento),'RB',0,'L',0);//dato Nombres
+    $this->pdf->Cell(0,5, utf8_decode(strtoupper($otrodocumento)),'RB',0,'L',0);//dato Nombres
     $this->pdf->Ln(6);
     ##########################
-    
     ## DRO  ####
-    $nombre_dro = 'Cincel';
-    $registro_dro = '85';
-    $domicilio_completo_dro = 'Venustiano Carranza';
+    $nombre_dro = strtoupper($dro_nombre." ".$dro_apellido_paterno." ".$dro_apellido_materno);//'Cincel';
+    $registro_dro = $dro_idpersona;//'85';
+    $domicilio_completo_dro = strtoupper($dro_calle." #".$dro_num_ext." ".$dro_num_int." ".$dro_colonia." ".$dro_del." CP".$dro_codpos);//'Venustiano Carranza';
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('DIRECTOR RESPONSABLE DE OBRA'),1,0,'L','1');
     $this->pdf->Ln(6);
@@ -770,9 +1239,9 @@ class Reporte extends CI_Controller {
     ##########################
 
     ## Corresponsable SE ####
-    $nombre_se = 'Cincel';
-    $registro_se = '85';
-    $domicilio_completo_se = 'Venustiano Carranza';    
+    $nombre_se = strtoupper($cse_nombre." ".$cse_apellido_paterno." ".$cse_apellido_materno);//'Cincel';
+    $registro_se = $cse_idpersona;//'85';
+    $domicilio_completo_se = strtoupper($cse_calle." #".$cse_num_ext." ".$cse_num_int." ".$cse_colonia." ".$cse_del." CP".$cse_codpos);//'Venustiano Carranza';    
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('CORRESPONSABLE EN SEGURIDAD ESTRUCTURAL'),1,0,'L','1');
     $this->pdf->Ln(6);
@@ -791,9 +1260,9 @@ class Reporte extends CI_Controller {
     ##########################
     #
     ## Corresponsable DUyA ####
-    $nombre_DUyA = 'Cincel';
-    $registro_DUyA = '85';
-    $domicilio_completo_DUyA = 'Venustiano Carranza';    
+    $nombre_DUyA = strtoupper($cdu_nombre." ".$cdu_apellido_paterno." ".$cdu_apellido_materno);//'Cincel';
+    $registro_DUyA = $cdu_idpersona;//'85';
+    $domicilio_completo_DUyA = strtoupper($cdu_calle." #".$cdu_num_ext." ".$cdu_num_int." ".$cdu_colonia." ".$cdu_del." CP".$cdu_codpos);//'Venustiano Carranza';    
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('CORRESPONSABLE EN DISEÑO URBANO Y ARQUITECTÓNICO'),1,0,'L','1');
     $this->pdf->Ln(6);
@@ -812,9 +1281,9 @@ class Reporte extends CI_Controller {
     ##########################
     #
     ## Corresponsable Instalaciones ####
-    $nombre_CeI = 'Cincel';
-    $registro_CeI = '85';
-    $domicilio_completo_CeI = 'Venustiano Carranza';    
+    $nombre_CeI = strtoupper($ci_nombre." ".$ci_apellido_paterno." ".$ci_apellido_materno);//'Cincel';
+    $registro_CeI = $ci_idpersona;//'85';
+    $domicilio_completo_CeI = strtoupper($ci_calle." #".$ci_num_ext." ".$ci_num_int." ".$ci_colonia." ".$ci_del." CP".$ci_codpos);//'Venustiano Carranza';    
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(0,6, utf8_decode('CORRESPONSABLE EN INSTALACIONES'),1,0,'L','1');
     $this->pdf->Ln(6);
@@ -833,7 +1302,12 @@ class Reporte extends CI_Controller {
     ##########################
     
     $this->pdf->addPage();//Salto
-
+    if($borrador == 1){
+        $this->pdf->SetFont('Arial','B',50);
+        $this->pdf->SetTextColor(255,192,203);
+        $this->pdf->RotatedText(35,190,'     B  O  R  R  A  D  O  R     ',45);
+        $this->pdf->SetTextColor(0,0,0);
+    }
     ## Caracteristicas de la obra ####
     // echo $idsubproceso; exit();
     switch ($idsubproceso) {
@@ -885,21 +1359,21 @@ class Reporte extends CI_Controller {
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(20,5, utf8_decode("Zonificación: "),'L',0,'L',0);
-    $this->pdf->Cell(0,5, utf8_decode($zonificacion),'R',0,'L',0);//dato Nombres
+    $this->pdf->Cell(0,5, utf8_decode(strtoupper($zonificacion)),'R',0,'L',0);//dato Nombres
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(20,5, utf8_decode("Uso o destino: "),'L',0,'L',0);
-    $this->pdf->Cell(0,5, utf8_decode($usodestino),'R',0,'L',0);//dato Nombres
+    $this->pdf->Cell(0,5, utf8_decode(strtoupper($usodestino)),'R',0,'L',0);//dato Nombres
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(42,5, utf8_decode("Dictamen de Impacto urbano número: "),'L',0,'L',0);
-    $this->pdf->Cell(82,5, utf8_decode($impactourbano ),'',0,'L',0);//dato Nombres
+    $this->pdf->Cell(82,5, utf8_decode(strtoupper($impactourbano) ),'',0,'L',0);//dato Nombres
     $this->pdf->Cell(12,5, utf8_decode("de fecha: "),'',0,'L',0);
     $this->pdf->Cell(0,5, utf8_decode($fechaimpactourbano ),'R',0,'L',0);//dato Nombres
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(54,5, utf8_decode("Manifestación o Dictamén de Impacto Ambiental: "),'BL',0,'L',0);
-    $this->pdf->Cell(70,5, utf8_decode($impactomedioambiente ),'B',0,'L',0);//dato Nombres
+    $this->pdf->Cell(70,5, utf8_decode(strtoupper($impactomedioambiente) ),'B',0,'L',0);//dato Nombres
     $this->pdf->Cell(12,5, utf8_decode("de fecha: "),'B',0,'L',0);
     $this->pdf->Cell(0,5, utf8_decode($fechaimpactomedioambiente ),'RB',0,'L',0);//dato Nombres
     $this->pdf->Ln(6);
@@ -1017,7 +1491,7 @@ class Reporte extends CI_Controller {
     $this->pdf->Ln(5);
 
     $this->pdf->Cell(14,5, utf8_decode("Vivienda Tipo 'A' "),'LB',0,'L',0);
-    $this->pdf->Cell(20,5, utf8_decode($viviendaa),'B',0,'R',0);//dato Nombres
+    $this->pdf->Cell(20,5, utf8_decode($vivienda),'B',0,'R',0);//dato Nombres
     $this->pdf->Cell(15,5, utf8_decode('m2'),'B',0,'L',0);//dato Nombres
     $this->pdf->Cell(14,5, utf8_decode("Vivienda Tipo 'B': "),'B',0,'L',0);
     $this->pdf->Cell(20,5, utf8_decode($viviendab),'B',0,'R',0);//dato Nombres
@@ -1172,38 +1646,69 @@ class Reporte extends CI_Controller {
     $this->pdf->Cell(0,5, utf8_decode("Firma"),'R',0,'C',0);
     $this->pdf->Ln(5);
 
+    $this->pdf->SetXY(15, 220);
     $this->pdf->Cell(60,10, utf8_decode("Propietario, poseedor o interesado: "),'L',0,'L',0);
+    $this->pdf->SetXY(75, 222);
+    $this->pdf->Cell(40,5, utf8_decode(strtoupper($prop_nombre." ".$prop_apellido_paterno." ".$prop_apellido_materno)),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 220);
     $this->pdf->Cell(40,10, utf8_decode('________________________________'),0,0,'C',0);//dato Nombres
     $this->pdf->Cell(0,10, utf8_decode("________________________________"),'R',0,'C',0);
     $this->pdf->Ln(7);
 
+    $this->pdf->SetXY(15, 227);
     $this->pdf->Cell(60,10, utf8_decode("Representante legal: "),'L',0,'L',0);
-    $this->pdf->Cell(40,10, utf8_decode('________________________________'),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 229);
+    $this->pdf->Cell(40,5, utf8_decode(strtoupper($rep_nombre." ".$rep_apellido_paterno." ".$rep_apellido_materno)),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 227);
+    $this->pdf->Cell(40,10, utf8_decode("________________________________"),0,0,'C',0);//dato Nombres
     $this->pdf->Cell(0,10, utf8_decode("________________________________"),'R',0,'C',0);
     $this->pdf->Ln(7);
 
+    $this->pdf->SetXY(15, 234);
     $this->pdf->Cell(60,10, utf8_decode("Director responsable de obra: "),'L',0,'L',0);
-    $this->pdf->Cell(40,10, utf8_decode('________________________________'),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 234);
+    $this->pdf->Cell(40,10, utf8_decode(strtoupper($dro_nombre." ".$dro_apellido_paterno." ".$dro_apellido_materno)),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 234);
+    $this->pdf->Cell(40,10, utf8_decode("________________________________"),0,0,'C',0);//dato Nombres
     $this->pdf->Cell(0,10, utf8_decode("________________________________"),'R',0,'C',0);
     $this->pdf->Ln(7);
 
+    $this->pdf->SetXY(15, 241);
     $this->pdf->Cell(60,10, utf8_decode("Corresponsable en seguridad estructura: "),'L',0,'L',0);
-    $this->pdf->Cell(40,10, utf8_decode('________________________________'),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 241);
+    $this->pdf->Cell(40,10, utf8_decode(strtoupper($cse_nombre." ".$cse_apellido_paterno." ".$cse_apellido_materno)),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 241);
+    $this->pdf->Cell(40,10, utf8_decode("________________________________"),0,0,'C',0);//dato Nombres
     $this->pdf->Cell(0,10, utf8_decode("________________________________"),'R',0,'C',0);
     $this->pdf->Ln(7);
 
+    $this->pdf->SetXY(15, 248);
     $this->pdf->Cell(60,10, utf8_decode("Corresponsable en diseño urbano y arquitectónico: "),'L',0,'L',0);
-    $this->pdf->Cell(40,10, utf8_decode('________________________________'),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 248);
+    $this->pdf->Cell(40,10, utf8_decode(strtoupper($cdu_nombre." ".$cdu_apellido_paterno." ".$cdu_apellido_materno)),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 248);
+    $this->pdf->Cell(40,10, utf8_decode("________________________________"),0,0,'C',0);//dato Nombres
     $this->pdf->Cell(0,10, utf8_decode("________________________________"),'R',0,'C',0);
     $this->pdf->Ln(7);
 
+    $this->pdf->SetXY(15, 255);
     $this->pdf->Cell(60,10, utf8_decode("Corresponsable en instalaciones: "),'BL',0,'L',0);
-    $this->pdf->Cell(40,10, utf8_decode('________________________________'),'B',0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 255);
+    $this->pdf->Cell(40,10, utf8_decode(strtoupper($ci_nombre." ".$ci_apellido_paterno." ".$ci_apellido_materno)),0,0,'C',0);//dato Nombres
+    $this->pdf->SetXY(75, 255);
+    $this->pdf->Cell(40,10, utf8_decode("________________________________"),'B',0,'C',0);//dato Nombres
     $this->pdf->Cell(0,10, utf8_decode("________________________________"),'BR',0,'C',0);
     $this->pdf->Ln(7);
 
     $this->pdf->addPage();//Salto
-
+    if($borrador == 1){
+        $this->pdf->SetFont('Arial','B',50);
+        $this->pdf->SetTextColor(255,192,203);
+        $this->pdf->RotatedText(35,190,'     B  O  R  R  A  D  O  R     ',45);
+        $this->pdf->SetTextColor(0,0,0);
+    }
+    $this->pdf->SetFont('Arial', '', 7);
+    $this->pdf->Ln(7);
     $this->pdf->SetXY(15, 14);  
     $this->pdf->MultiCell(0,72, utf8_decode("Observaciones"),1,'L',0);
     $this->pdf->SetXY(35, 15);
@@ -1223,15 +1728,20 @@ k) No se registrará la manifestación de construcción cuando le falte cualquie
     ##########################
 
     ## Texto presente hoja ####
+    $datov = explode("-", $fecha_venc);  
+    $fechaVDia = $datov[0];//date('d'); // es la fecha en que le da imprimir ¿? 
+    $fechaVMes = $datov[1];//date('F'); // es la fecha en que le da imprimir ¿? 
+    $fechaVAnio =  "20".$datov[2];//date('Y'); // es la fecha en que le da imprimir ¿? 
+
     $this->pdf->SetFont('Arial', 'B', 7);
-    $this->pdf->MultiCell(0,3, utf8_decode("LA PRESENTE HOJA FORMA PARTE INTEGRANTE DE LA SOLICITUD DEL TRÁMITE REGISTRO DE MANIFESTACIÓN DE CONSTRUCCIÓN TIPO _____, N°_____________________________ DE FECHA DE EXPEDICIÓN_________ DE _________________ DE _____, CON VIGENCIA AL __________________ DE ________________DE _____________."),0,'J',1);
+    $this->pdf->MultiCell(0,3, utf8_decode("LA PRESENTE HOJA FORMA PARTE INTEGRANTE DE LA SOLICITUD DEL TRÁMITE REGISTRO DE MANIFESTACIÓN DE CONSTRUCCIÓN TIPO ".$tipo.", N° ".$folio." DE FECHA DE EXPEDICIÓN ".$fechaDia." DE ".$fechaMes." DE ".$fechaAnio.", CON VIGENCIA AL ".$fechaVDia." DE ".$fechaVMes." DE ".$fechaVAnio."."),0,'J',1);
     $this->pdf->Ln(6);
     ##########################
     #
     ## Texto presente hoja ####
-    $area = 'INFORMATICA';
-    $nombrecompleto = 'Mario Antonio Rivera Jacinto';
-    $cargo = 'Analista Programador';
+    $area = "";//'INFORMATICA';
+    $nombrecompleto = "";//'Mario Antonio Rivera Jacinto';
+    $cargo = "";//'Analista Programador';
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Cell(20,6, utf8_decode('Recibió '),'LT',0,'R','1');
     $this->pdf->SetFont('Arial', 'I', 7);
@@ -1253,10 +1763,10 @@ k) No se registrará la manifestación de construcción cuando le falte cualquie
     $this->pdf->Cell(20,15, utf8_decode(''),'LB',0,'L',0);
     $this->pdf->Cell(70,15, utf8_decode(' '),'RB',0,'L',0);
 
-    $this->pdf->SetXY(108,104);
+    $this->pdf->SetXY(108,101);
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->MultiCell(87,5,utf8_decode("Sello de recepción"),'LTR','J',1);
-    $this->pdf->SetXY(108,108);
+    $this->pdf->SetXY(108,105);
     $this->pdf->MultiCell(0,36, utf8_decode(' '),'RBL','L',0);
     $this->pdf->Ln(6);
     ##########################
@@ -1265,6 +1775,8 @@ k) No se registrará la manifestación de construcción cuando le falte cualquie
     $this->pdf->SetXY(70,150);
     $this->pdf->SetFont('Arial', 'B', 7);
     $this->pdf->Image(APPPATH.'/third_party/imagenes/telefonito.JPG',55,150,15);
+    // $this->pdf->Image(APPPATH.'../temp/qrcode.png',15,150,27);
+    // echo '<img src="'.base_url().'temp/qrcode.png" />';
     $this->pdf->Cell(0,5, utf8_decode("    QUEJAS O DENUNCUAS"),0,0,'L',0);
     $this->pdf->SetXY(70,154);
     $this->pdf->Cell(0,4, utf8_decode(" "),0,0,'L',1);
