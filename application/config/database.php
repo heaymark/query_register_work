@@ -75,18 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	/*'hostname' =>'(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=localhost)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
-	'username' =>'OWDRO',
-	'password' =>'OWDRO',
-	'database' =>'OWDRO',*/
-	/*'hostname' => '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.14.107)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=xe)))',
-	'username' => 'OWDRO', 
-	'password' => 'OWDRO',
-	'database' => 'OWDRO',*/
-	'hostname'=>'(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.65.92)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=desorcl)))',
-	'username' => 'owdro',
-	'password' => 'Owdr0',
-	'database' => 'OWDRO',
+	'hostname'=>'(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=10.1.1.1)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SID=desorcl)))',
+	'username' => 'usuario',
+	'password' => 'contraseña',
+	'database' => 'esuqema',
 	'dbdriver' => 'oci8',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
